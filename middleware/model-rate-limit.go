@@ -176,6 +176,13 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 			return
 		}
 
+		// 检查用户角色，管理员和超级管理员豁免限流
+		userRole := c.GetInt("role")
+		if userRole >= common.RoleAdminUser {
+			c.Next()
+			return
+		}
+
 		// 计算限流参数
 		duration := int64(setting.ModelRequestRateLimitDurationMinutes * 60)
 		totalMaxCount := setting.ModelRequestRateLimitCount
