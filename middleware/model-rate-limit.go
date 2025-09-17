@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 	"veloera/common"
 	"veloera/constant"
@@ -185,41 +184,12 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 			return
 		}
 
-		// 检查用户权限 - 从已验证的上下文获取用户信息
-		role := 0  // 默认为访客用户
-		userId := 0
-		
-		// 首先尝试从 gin.Context 中获取已验证的用户信息（优先）
-		if contextRole := c.GetInt(constant.ContextKeyUserRole); contextRole > 0 {
-			role = contextRole
-			userId = c.GetInt("id")
-		} else if contextUserId := c.GetInt("id"); contextUserId > 0 {
-			// 如果有用户 ID 但没有角色信息，直接查询用户角色
-			userId = contextUserId
-			user := &model.User{}
-			if err := model.DB.Where("id = ?", userId).Select("role").Find(user).Error; err == nil {
-				role = user.Role
-			}
-		} else {
-			// 最后尝试从请求头解析 token（用于处理未经过认证中间件的情况）
-			authHeader := c.Request.Header.Get("Authorization")
-			if authHeader != "" {
-				key := strings.TrimPrefix(authHeader, "Bearer ")
-				key = strings.TrimPrefix(key, "sk-")
-				if strings.Contains(key, "-") {
-					parts := strings.Split(key, "-")
-					key = parts[0]
-				}
-				token, err := model.ValidateUserToken(key)
-				if err == nil && token != nil {
-					userId = token.UserId
-					user := &model.User{}
-					if err := model.DB.Where("id = ?", userId).Select("role").Find(user).Error; err == nil {
-						role = user.Role
-					}
-				}
-			}
+		// 检查用户权限 - 从认证中间件设置的上下文获取用户信息
+		role := c.GetInt(constant.ContextKeyUserRole)  // 优先使用新的标准化方式
+		if role == 0 {
+			role = c.GetInt("role")  // 向后兼容，支持旧的Web认证方式
 		}
+		userId := c.GetInt("id")  // 默认为0（未登录用户）
 		
 		// 如果是管理员或站长，则跳过速率限制
 		if role == common.RoleAdminUser || role == common.RoleRootUser {

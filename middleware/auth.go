@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 	"veloera/common"
+	"veloera/constant"
 	"veloera/model"
 )
 
@@ -134,6 +135,7 @@ func authHelper(c *gin.Context, minRole int) {
 	}
 	c.Set("username", username)
 	c.Set("role", role)
+	c.Set(constant.ContextKeyUserRole, role)
 	c.Set("id", id)
 	c.Set("group", session.Get("group"))
 	c.Set("use_access_token", useAccessToken)

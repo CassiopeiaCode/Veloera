@@ -128,6 +128,7 @@ func GetUserCache(userId int) (userCache *UserBase, err error) {
 		Username: user.Username,
 		Setting:  user.Setting,
 		Email:    user.Email,
+		Role:     user.Role,
 	}
 
 	return userCache, nil
