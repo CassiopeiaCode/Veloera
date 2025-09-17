@@ -6,12 +6,15 @@ AI generated release summary is not available due to an error.
 
 Special thanks to:
 
-|![Avatar](https://github.com/CassiopeiaCode.png?size=40) |
-| :----------: |
-| **CassiopeiaCode** |
-| 1 commit |
+|![Avatar](https://github.com/github.png?size=40) |![Avatar](https://github.com/CassiopeiaCode.png?size=40) |
+| :----------: | :----------: |
+| **github-actions[bot]** | **CassiopeiaCode** |
+| 1 commit | 1 commit |
 
 ### Features Added
+
+- AI failed to generate details for this section.
+### Documentation
 
 - AI failed to generate details for this section.
 ---
