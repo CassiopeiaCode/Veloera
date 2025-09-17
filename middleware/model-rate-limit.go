@@ -24,7 +24,6 @@ import (
 	"time"
 	"veloera/common"
 	"veloera/constant"
-	"veloera/model"
 	"veloera/setting"
 
 	"github.com/gin-gonic/gin"
