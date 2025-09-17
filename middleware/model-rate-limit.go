@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"time"
 	"veloera/common"
+	"veloera/model"
 	"veloera/setting"
 
 	"github.com/gin-gonic/gin"
@@ -88,14 +89,17 @@ func recordRedisRequest(ctx context.Context, rdb *redis.Client, key string, maxC
 }
 
 // Redis限流处理器
-func redisRateLimitHandler(duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
+func redisRateLimitHandler(userId int, duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
+	return redisRateLimitHandlerForString(strconv.Itoa(userId), duration, totalMaxCount, successMaxCount)
+}
+
+func redisRateLimitHandlerForString(userIdStr string, duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		userId := strconv.Itoa(c.GetInt("id"))
 		ctx := context.Background()
 		rdb := common.RDB
 
 		// 1. 检查总请求数限制（当totalMaxCount为0时会自动跳过）
-		totalKey := fmt.Sprintf("rateLimit:%s:%s", ModelRequestRateLimitCountMark, userId)
+		totalKey := fmt.Sprintf("rateLimit:%s:%s", ModelRequestRateLimitCountMark, userIdStr)
 		allowed, err := checkRedisRateLimit(ctx, rdb, totalKey, totalMaxCount, duration)
 		if err != nil {
 			fmt.Println("检查总请求数限制失败:", err.Error())
@@ -107,7 +111,7 @@ func redisRateLimitHandler(duration int64, totalMaxCount, successMaxCount int) g
 		}
 
 		// 2. 检查成功请求数限制
-		successKey := fmt.Sprintf("rateLimit:%s:%s", ModelRequestRateLimitSuccessCountMark, userId)
+		successKey := fmt.Sprintf("rateLimit:%s:%s", ModelRequestRateLimitSuccessCountMark, userIdStr)
 		allowed, err = checkRedisRateLimit(ctx, rdb, successKey, successMaxCount, duration)
 		if err != nil {
 			fmt.Println("检查成功请求数限制失败:", err.Error())
@@ -133,13 +137,16 @@ func redisRateLimitHandler(duration int64, totalMaxCount, successMaxCount int) g
 }
 
 // 内存限流处理器
-func memoryRateLimitHandler(duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
+func memoryRateLimitHandler(userId int, duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
+	return memoryRateLimitHandlerForString(strconv.Itoa(userId), duration, totalMaxCount, successMaxCount)
+}
+
+func memoryRateLimitHandlerForString(userIdStr string, duration int64, totalMaxCount, successMaxCount int) gin.HandlerFunc {
 	inMemoryRateLimiter.Init(time.Duration(setting.ModelRequestRateLimitDurationMinutes) * time.Minute)
 
 	return func(c *gin.Context) {
-		userId := strconv.Itoa(c.GetInt("id"))
-		totalKey := ModelRequestRateLimitCountMark + userId
-		successKey := ModelRequestRateLimitSuccessCountMark + userId
+		totalKey := ModelRequestRateLimitCountMark + userIdStr
+		successKey := ModelRequestRateLimitSuccessCountMark + userIdStr
 
 		// 1. 检查总请求数限制（当totalMaxCount为0时跳过）
 		if totalMaxCount > 0 && !inMemoryRateLimiter.Request(totalKey, totalMaxCount, duration) {
@@ -176,11 +183,40 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 			return
 		}
 
-		// 检查用户权限
-		role := c.GetInt("role")
+		// 检查用户权限 - 主动获取用户信息
+		role := 0  // 默认为访客用户
+		userId := 0
+		
+		// 尝试从 gin.Context 中获取已验证的用户信息
+		if contextRole := c.GetInt("role"); contextRole > 0 {
+			role = contextRole
+			userId = c.GetInt("id")
+		} else {
+			// 如果 gin.Context 中没有用户信息，尝试从请求头获取 access token
+			accessToken := c.Request.Header.Get("Authorization")
+			if accessToken != "" {
+				user := model.ValidateAccessToken(accessToken)
+				if user != nil && user.Username != "" {
+					role = user.Role
+					userId = user.Id
+				}
+			}
+		}
+		
+		// 如果是管理员或站长，则跳过速率限制
 		if role == common.RoleAdminUser || role == common.RoleRootUser {
 			c.Next()
 			return
+		}
+
+		// 如果没有获取到有效的用户ID，为未登录用户分配基于IP的限制
+		userIdStr := ""
+		if userId == 0 {
+			// 对于未登录用户，使用IP地址作为标识进行速率限制
+			clientIP := c.ClientIP()
+			userIdStr = "ip_" + clientIP
+		} else {
+			userIdStr = strconv.Itoa(userId)
 		}
 
 		// 计算限流参数
@@ -190,9 +226,9 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 
 		// 根据存储类型选择并执行限流处理器
 		if common.RedisEnabled {
-			redisRateLimitHandler(duration, totalMaxCount, successMaxCount)(c)
+			redisRateLimitHandlerForString(userIdStr, duration, totalMaxCount, successMaxCount)(c)
 		} else {
-			memoryRateLimitHandler(duration, totalMaxCount, successMaxCount)(c)
+			memoryRateLimitHandlerForString(userIdStr, duration, totalMaxCount, successMaxCount)(c)
 		}
 	}
 }
