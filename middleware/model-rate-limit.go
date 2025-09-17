@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"time"
 	"veloera/common"
+	"veloera/constant"
 	"veloera/model"
 	"veloera/setting"
 
@@ -188,7 +189,7 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 		userId := 0
 		
 		// 尝试从 gin.Context 中获取已验证的用户信息
-		if contextRole := c.GetInt("role"); contextRole > 0 {
+		if contextRole := c.GetInt(constant.ContextKeyUserRole); contextRole > 0 {
 			role = contextRole
 			userId = c.GetInt("id")
 		} else {

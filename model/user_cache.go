@@ -27,7 +27,7 @@ import (
 	"github.com/bytedance/gopkg/util/gopool"
 )
 
-// UserBase struct remains the same as it represents the cached data structure
+// UserBase struct represents the cached data structure
 type UserBase struct {
 	Id       int    `json:"id"`
 	Group    string `json:"group"`
@@ -36,6 +36,7 @@ type UserBase struct {
 	Status   int    `json:"status"`
 	Username string `json:"username"`
 	Setting  string `json:"setting"`
+	Role     int    `json:"role"`
 }
 
 func (user *UserBase) WriteContext(c *gin.Context) {
@@ -45,6 +46,7 @@ func (user *UserBase) WriteContext(c *gin.Context) {
 	c.Set(constant.ContextKeyUserEmail, user.Email)
 	c.Set("username", user.Username)
 	c.Set(constant.ContextKeyUserSetting, user.GetSetting())
+	c.Set(constant.ContextKeyUserRole, user.Role)
 }
 
 func (user *UserBase) GetSetting() map[string]interface{} {
