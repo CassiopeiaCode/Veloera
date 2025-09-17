@@ -49,6 +49,15 @@
 
 > [!TIP]
 > 最新版 Docker 镜像：`ghcr.io/veloera/veloera:latest`
+> 
+> **自动构建**: 本项目已配置自动 CI/CD 流水线，每次推送到 main 分支都会自动构建并发布 Docker 镜像到 GitHub Container Registry (GHCR)。
+
+### Docker 镜像标签说明
+
+- `latest`: 最新稳定版本（来自 Git 标签）
+- `main`: 开发版本（来自 main 分支最新提交）
+- `alpha`/`beta`: 预发布版本
+- `<version>`: 特定版本标签
 
 ### docker-compose
 

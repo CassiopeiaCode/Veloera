@@ -1,0 +1,76 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-builds:
+    name: Test Build Process
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate version info
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "${{ github.ref_name }}" > VERSION
+          else
+            git describe --tags --always > VERSION || echo "dev-$(git rev-parse --short HEAD)" > VERSION
+          fi
+          echo "Generated VERSION: $(cat VERSION)"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+          cache-dependency-path: 'web/pnpm-lock.yaml'
+      
+      - name: Build Frontend
+        env:
+          CI: ""
+        run: |
+          cd web
+          pnpm install
+          DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat ../VERSION) pnpm run build
+          cd ..
+      
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache-dependency-path: '**/go.sum'
+      
+      - name: Build Backend
+        run: |
+          go build -ldflags "-s -w -X 'veloera/common.Version=$(cat VERSION)'" -o veloera-test
+
+      - name: Test Docker build (dry run)
+        run: |
+          echo "Testing Docker build configuration..."
+          docker buildx create --use --name testbuilder || true
+          docker buildx build \
+            --platform linux/amd64 \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --tag veloera:test \
+            --load \
+            .
+
+      - name: Cleanup
+        run: |
+          rm -f veloera-test
+          docker rmi veloera:test || true
+          docker buildx rm testbuilder || true
