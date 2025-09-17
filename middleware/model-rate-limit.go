@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 	"veloera/common"
 	"veloera/constant"
@@ -184,22 +185,38 @@ func ModelRequestRateLimit() func(c *gin.Context) {
 			return
 		}
 
-		// 检查用户权限 - 主动获取用户信息
+		// 检查用户权限 - 从已验证的上下文获取用户信息
 		role := 0  // 默认为访客用户
 		userId := 0
 		
-		// 尝试从 gin.Context 中获取已验证的用户信息
+		// 首先尝试从 gin.Context 中获取已验证的用户信息（优先）
 		if contextRole := c.GetInt(constant.ContextKeyUserRole); contextRole > 0 {
 			role = contextRole
 			userId = c.GetInt("id")
+		} else if contextUserId := c.GetInt("id"); contextUserId > 0 {
+			// 如果有用户 ID 但没有角色信息，直接查询用户角色
+			userId = contextUserId
+			user := &model.User{}
+			if err := model.DB.Where("id = ?", userId).Select("role").Find(user).Error; err == nil {
+				role = user.Role
+			}
 		} else {
-			// 如果 gin.Context 中没有用户信息，尝试从请求头获取 access token
-			accessToken := c.Request.Header.Get("Authorization")
-			if accessToken != "" {
-				user := model.ValidateAccessToken(accessToken)
-				if user != nil && user.Username != "" {
-					role = user.Role
-					userId = user.Id
+			// 最后尝试从请求头解析 token（用于处理未经过认证中间件的情况）
+			authHeader := c.Request.Header.Get("Authorization")
+			if authHeader != "" {
+				key := strings.TrimPrefix(authHeader, "Bearer ")
+				key = strings.TrimPrefix(key, "sk-")
+				if strings.Contains(key, "-") {
+					parts := strings.Split(key, "-")
+					key = parts[0]
+				}
+				token, err := model.ValidateUserToken(key)
+				if err == nil && token != nil {
+					userId = token.UserId
+					user := &model.User{}
+					if err := model.DB.Where("id = ?", userId).Select("role").Find(user).Error; err == nil {
+						role = user.Role
+					}
 				}
 			}
 		}
