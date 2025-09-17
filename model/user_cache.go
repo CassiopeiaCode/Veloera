@@ -4,19 +4,7 @@
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
-// the Free Softwarfunc cacheSetUserSetting(userId int, setting string) error {
-	if !common.RedisEnabled {
-		return nil
-	}
-	return common.RedisHSetField(getUserCacheKey(userId), "Setting", setting)
-}
-
-func cacheSetUserRole(userId int, role int) error {
-	if !common.RedisEnabled {
-		return nil
-	}
-	return common.RedisHSetField(getUserCacheKey(userId), "Role", fmt.Sprintf("%d", role))
-}dation, either version 3 of the License, or
+// the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
@@ -48,7 +36,6 @@ type UserBase struct {
 	Status   int    `json:"status"`
 	Username string `json:"username"`
 	Setting  string `json:"setting"`
-	Role     int    `json:"role"`
 }
 
 func (user *UserBase) WriteContext(c *gin.Context) {
@@ -57,7 +44,6 @@ func (user *UserBase) WriteContext(c *gin.Context) {
 	c.Set(constant.ContextKeyUserStatus, user.Status)
 	c.Set(constant.ContextKeyUserEmail, user.Email)
 	c.Set("username", user.Username)
-	c.Set("role", user.Role)
 	c.Set(constant.ContextKeyUserSetting, user.GetSetting())
 }
 
@@ -140,7 +126,6 @@ func GetUserCache(userId int) (userCache *UserBase, err error) {
 		Username: user.Username,
 		Setting:  user.Setting,
 		Email:    user.Email,
-		Role:     user.Role,
 	}
 
 	return userCache, nil
