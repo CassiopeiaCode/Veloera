@@ -121,14 +121,34 @@ const LoginForm = () => {
   };
 
   return (
-    <AuthFormLayout title={t('用户登录')}>
-      <Form>
+    <AuthFormLayout title={t('用户登录')} className="login-form-container fade-in-up">
+      <Form className="beautiful-form" style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: '20px',
+        padding: '40px',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 16px 64px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease',
+      }}>
         <Form.Input
           field={'username'}
           label={t('用户名/邮箱')}
           placeholder={t('用户名/邮箱')}
           name='username'
           onChange={(value) => handleChange('username', value)}
+          className="custom-input fade-in delay-1 hover-lift"
+          style={{
+            marginBottom: '24px',
+          }}
+          inputStyle={{
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s ease',
+            padding: '12px 16px',
+          }}
         />
         <Form.Input
           field={'password'}
@@ -137,41 +157,98 @@ const LoginForm = () => {
           name='password'
           type='password'
           onChange={(value) => handleChange('password', value)}
+          className="custom-input fade-in delay-2 hover-lift"
+          style={{
+            marginBottom: '32px',
+          }}
+          inputStyle={{
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s ease',
+            padding: '12px 16px',
+          }}
         />
 
         <Button
           theme='solid'
-          style={{ width: '100%' }}
+          style={{ 
+            width: '100%',
+            height: '48px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            border: 'none',
+            fontWeight: '600',
+            fontSize: '16px',
+            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
           type={'primary'}
           size='large'
           htmlType={'submit'}
           onClick={handleSubmit}
+          className="login-button fade-in delay-3 hover-lift"
         >
           {t('登录')}
         </Button>
       </Form>
       
       <div
+        className="form-links fade-in delay-4"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: 20,
+          marginTop: '24px',
+          padding: '0 20px',
         }}
       >
-        <Text>
+        <Text style={{
+          color: 'var(--semi-color-text-1)',
+          fontSize: '14px',
+        }}>
           {t('没有账户？')}{' '}
-          <Link to='/register'>{t('点击注册')}</Link>
+          <Link 
+            to='/register' 
+            style={{
+              color: '#667eea',
+              textDecoration: 'none',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+            }}
+            className="hover-glow"
+          >
+            {t('点击注册')}
+          </Link>
         </Text>
-        <Text>
-          {t('忘记密码？')} <Link to='/reset'>{t('点击重置')}</Link>
+        <Text style={{
+          color: 'var(--semi-color-text-1)',
+          fontSize: '14px',
+        }}>
+          {t('忘记密码？')} 
+          <Link 
+            to='/reset'
+            style={{
+              color: '#667eea',
+              textDecoration: 'none',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+            }}
+            className="hover-glow"
+          >
+            {t('点击重置')}
+          </Link>
         </Text>
       </div>
 
-      <ThirdPartyAuth
-        status={status}
-        onWeChatLoginClicked={onWeChatLoginClicked}
-        onTelegramLoginClicked={onTelegramLoginClicked}
-      />
+      <div className="third-party-auth fade-in delay-5">
+        <ThirdPartyAuth
+          status={status}
+          onWeChatLoginClicked={onWeChatLoginClicked}
+          onTelegramLoginClicked={onTelegramLoginClicked}
+        />
+      </div>
 
       <WeChatLoginModal
         visible={showWeChatLoginModal}

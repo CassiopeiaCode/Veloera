@@ -59,25 +59,34 @@ import { StyleContext } from '../context/Style/index.js';
 import { StatusContext } from '../context/Status/index.js';
 import InboxIcon from './InboxIcon';
 
-// 自定义顶部栏样式
+// 自定义顶部栏样式 - 现代化美化
 const headerStyle = {
-  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-  borderBottom: '1px solid var(--semi-color-border)',
-  background: 'var(--semi-color-bg-0)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+  background: 'rgba(255, 255, 255, 0.95)',
+  backdropFilter: 'blur(20px)',
   transition: 'all 0.3s ease',
   width: '100%',
+  borderRadius: '0 0 16px 16px',
+  position: 'sticky',
+  top: 0,
+  zIndex: 1000,
 };
 
-// 自定义顶部栏按钮样式
+// 自定义顶部栏按钮样式 - 现代化美化
 const headerItemStyle = {
-  borderRadius: '4px',
-  margin: '0 4px',
-  transition: 'all 0.3s ease',
+  borderRadius: '12px',
+  margin: '0 6px',
+  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+  position: 'relative',
+  overflow: 'hidden',
 };
 
-// 自定义顶部栏按钮悬停样式
+// 自定义顶部栏按钮悬停样式 - 现代化美化
 const headerItemHoverStyle = {
-  backgroundColor: 'var(--semi-color-primary-light-default)',
+  backgroundColor: 'rgba(102, 126, 234, 0.1)',
+  transform: 'translateY(-2px)',
+  boxShadow: '0 4px 12px rgba(102, 126, 234, 0.2)',
   color: 'var(--semi-color-primary)',
 };
 

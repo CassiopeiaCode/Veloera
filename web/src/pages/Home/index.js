@@ -89,15 +89,20 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className="home-container fade-in-up">
       {/* Warning banner for chat content logging */}
       {statusState?.status?.log_chat_content_enabled && (
         <Banner
           type="warning"
           description="此站点管理员可查看您的对话内容"
+          className="fade-in-down delay-1 hover-lift"
           style={{
-            margin: '0 0 16px 0',
-            borderRadius: '6px',
+            margin: '0 0 24px 0',
+            borderRadius: '16px',
+            background: 'rgba(255, 193, 7, 0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 193, 7, 0.3)',
+            boxShadow: '0 8px 32px rgba(255, 193, 7, 0.1)',
           }}
         />
       )}
@@ -106,57 +111,133 @@ const Home = () => {
           <Card
             bordered={false}
             headerLine={false}
-            title={t('系统状况')}
-            bodyStyle={{ padding: '10px 20px' }}
+            title={
+              <span className="card-title-gradient">
+                {t('系统状况')}
+              </span>
+            }
+            className="main-card fade-in-up delay-2 hover-lift"
+            bodyStyle={{ 
+              padding: '24px', 
+              background: 'transparent'
+            }}
+            style={{
+              marginBottom: '24px',
+              background: 'rgba(255, 255, 255, 0.9)',
+              backdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 12px 48px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              position: 'relative',
+            }}
           >
-            <Row gutter={16}>
+            <div 
+              className="card-background-pattern"
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                width: '200px',
+                height: '200px',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+                borderRadius: '50%',
+                transform: 'translate(50%, -50%)',
+                pointerEvents: 'none',
+              }}
+            />
+            <Row gutter={[24, 24]}>
               <Col span={12}>
                 <Card
-                  title={t('系统信息')}
+                  title={
+                    <span style={{ 
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      fontWeight: 600,
+                    }}>
+                      {t('系统信息')}
+                    </span>
+                  }
+                  className="info-card fade-in-right delay-3 hover-scale"
                   headerExtraContent={
                     <span
                       style={{
                         fontSize: '12px',
-                        color: 'var(--semi-color-text-1)',
+                        color: 'var(--semi-color-text-2)',
+                        background: 'rgba(102, 126, 234, 0.1)',
+                        padding: '4px 8px',
+                        borderRadius: '8px',
                       }}
                     >
                       {t('系统信息总览')}
                     </span>
                   }
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    transition: 'all 0.3s ease',
+                  }}
+                  bodyStyle={{ 
+                    background: 'transparent',
+                    padding: '20px',
+                  }}
                 >
-                  <p>
-                    {t('名称')}：{statusState?.status?.system_name}
-                  </p>
-                  <p>
-                    {t('版本')}：
-                    {statusState?.status?.version
-                      ? statusState?.status?.version
-                      : 'unknown'}
-                  </p>
-                  <p>
-                    {t('源码')}：
-                    <a
-                      href='https://github.com/Veloera/Veloera'
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      https://github.com/Veloera/Veloera
-                    </a>
-                  </p>
-                  
-                  <p>
-                    {t('协议')}：
-                    <a
-                      href='https://www.apache.org/licenses/LICENSE-2.0'
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      GNU GPL v3-or-later
-                    </a>
-                  </p>
-                  <p>
-                    {t('启动时间')}：{getStartTimeString()}
-                  </p>
+                  <div className="info-item-container">
+                    <p className="info-item fade-in delay-4">
+                      <span className="info-label">{t('名称')}：</span>
+                      <span className="info-value">{statusState?.status?.system_name}</span>
+                    </p>
+                    <p className="info-item fade-in delay-5">
+                      <span className="info-label">{t('版本')}：</span>
+                      <span className="info-value version-badge">
+                        {statusState?.status?.version
+                          ? statusState?.status?.version
+                          : 'unknown'}
+                      </span>
+                    </p>
+                    <p className="info-item fade-in delay-6">
+                      <span className="info-label">{t('源码')}：</span>
+                      <a
+                        href='https://github.com/Veloera/Veloera'
+                        target='_blank'
+                        rel='noreferrer'
+                        className="info-link hover-glow"
+                        style={{
+                          color: '#667eea',
+                          textDecoration: 'none',
+                          fontWeight: 500,
+                          transition: 'all 0.3s ease',
+                        }}
+                      >
+                        https://github.com/Veloera/Veloera
+                      </a>
+                    </p>
+                    
+                    <p className="info-item fade-in delay-7">
+                      <span className="info-label">{t('协议')}：</span>
+                      <a
+                        href='https://www.apache.org/licenses/LICENSE-2.0'
+                        target='_blank'
+                        rel='noreferrer'
+                        className="info-link hover-glow"
+                        style={{
+                          color: '#667eea',
+                          textDecoration: 'none',
+                          fontWeight: 500,
+                          transition: 'all 0.3s ease',
+                        }}
+                      >
+                        GNU GPL v3-or-later
+                      </a>
+                    </p>
+                    <p className="info-item fade-in delay-8">
+                      <span className="info-label">{t('启动时间')}：</span>
+                      <span className="info-value">{getStartTimeString()}</span>
+                    </p>
+                  </div>
                 </Card>
               </Col>
               <Col span={12}>
@@ -240,7 +321,7 @@ const Home = () => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };
 
