@@ -11,6 +11,50 @@
   --cute-lavender: #dda0dd;
   --cute-rose: #ff7675;
   --cute-sky: #74b9ff;
+  
+  // 浅色模式文本颜色
+  --cute-text-primary: rgba(44, 44, 52, 0.95);
+  --cute-text-secondary: rgba(44, 44, 52, 0.75);
+  --cute-text-tertiary: rgba(44, 44, 52, 0.55);
+  
+  // 浅色模式背景颜色
+  --cute-bg-primary: rgba(255, 255, 255, 0.95);
+  --cute-bg-secondary: rgba(255, 255, 255, 0.85);
+  --cute-bg-card: rgba(255, 255, 255, 0.90);
+  --cute-bg-overlay: rgba(255, 255, 255, 0.98);
+  
+  // 浅色模式边框颜色
+  --cute-border-light: rgba(255, 255, 255, 0.3);
+  --cute-border-medium: rgba(255, 255, 255, 0.2);
+  --cute-border-primary: rgba(255, 154, 158, 0.3);
+}
+
+// 深色模式配色变量
+body[theme-mode="dark"] {
+  --cute-pink: #ff8a8e;
+  --cute-purple: #c471f5;
+  --cute-blue: #74b9ff;
+  --cute-mint: #7bed9f;
+  --cute-peach: #ffd97d;
+  --cute-lavender: #dda0dd;
+  --cute-rose: #ff7675;
+  --cute-sky: #74b9ff;
+  
+  // 深色模式文本颜色
+  --cute-text-primary: rgba(255, 255, 255, 0.95);
+  --cute-text-secondary: rgba(255, 255, 255, 0.75);
+  --cute-text-tertiary: rgba(255, 255, 255, 0.55);
+  
+  // 深色模式背景颜色
+  --cute-bg-primary: rgba(26, 26, 46, 0.95);
+  --cute-bg-secondary: rgba(26, 26, 46, 0.85);
+  --cute-bg-card: rgba(26, 26, 46, 0.90);
+  --cute-bg-overlay: rgba(26, 26, 46, 0.98);
+  
+  // 深色模式边框颜色
+  --cute-border-light: rgba(255, 154, 158, 0.2);
+  --cute-border-medium: rgba(255, 154, 158, 0.15);
+  --cute-border-primary: rgba(255, 154, 158, 0.3);
 }
 
 // 全局背景渐变 - 可爱糖果色
@@ -221,7 +265,7 @@ body {
   background: transparent !important;
   
   .semi-layout-header {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: var(--cute-bg-overlay) !important;
     backdrop-filter: blur(20px) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
@@ -229,7 +273,7 @@ body {
   }
   
   .semi-layout-sider {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: var(--cute-bg-overlay) !important;
     backdrop-filter: blur(20px) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 8px 0 32px rgba(0, 0, 0, 0.1) !important;
@@ -243,7 +287,7 @@ body {
 
 // 美化卡片 - 可爱云朵风格 ☁️💕
 .semi-card {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: var(--cute-bg-card) !important;
   backdrop-filter: blur(25px) !important;
   border: 2px solid rgba(255, 154, 158, 0.3) !important;
   border-radius: 25px !important;
@@ -294,7 +338,7 @@ body {
       .semi-card-header-title {
         font-family: var(--cute-font-display) !important;
         font-weight: 600 !important;
-        color: var(--cute-purple) !important;
+        color: var(--cute-text-primary) !important;
         position: relative !important;
         
         &::after {
@@ -895,71 +939,700 @@ body[theme-mode="dark"] {
   
   &::before {
     background: 
-      radial-gradient(circle at 15% 85%, rgba(255, 154, 158, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 85% 15%, rgba(196, 113, 245, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(116, 185, 255, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 25% 25%, rgba(123, 237, 159, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 75% 75%, rgba(255, 234, 167, 0.1) 0%, transparent 40%) !important;
+      radial-gradient(circle at 15% 85%, rgba(255, 154, 158, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(196, 113, 245, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(116, 185, 255, 0.10) 0%, transparent 50%),
+      radial-gradient(circle at 25% 25%, rgba(123, 237, 159, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 75% 75%, rgba(255, 234, 167, 0.08) 0%, transparent 40%) !important;
   }
   
   &::after {
     content: '🌙 ⭐ 🌟 💫 ✨ 🎭 🦋 🍃' !important;
-    opacity: 0.15 !important;
+    opacity: 0.12 !important;
   }
   
   .semi-layout {
     .semi-layout-header {
-      background: rgba(26, 26, 46, 0.98) !important;
-      border-bottom: 2px dotted rgba(255, 154, 158, 0.3) !important;
-      box-shadow: 0 8px 32px rgba(255, 154, 158, 0.1) !important;
+      background: var(--cute-bg-overlay) !important;
+      border-bottom: 2px dotted rgba(255, 154, 158, 0.2) !important;
+      box-shadow: 0 8px 32px rgba(255, 154, 158, 0.08) !important;
     }
     
     .semi-layout-sider {
-      background: rgba(26, 26, 46, 0.98) !important;
-      border-right: 2px dotted rgba(255, 154, 158, 0.3) !important;
-      box-shadow: 8px 0 32px rgba(255, 154, 158, 0.1) !important;
+      background: var(--cute-bg-overlay) !important;
+      border-right: 2px dotted rgba(255, 154, 158, 0.2) !important;
+      box-shadow: 8px 0 32px rgba(255, 154, 158, 0.08) !important;
     }
   }
   
   .semi-card {
-    background: rgba(26, 26, 46, 0.95) !important;
-    border: 2px solid rgba(255, 154, 158, 0.2) !important;
-    box-shadow: 0 12px 40px rgba(255, 154, 158, 0.15) !important;
+    background: var(--cute-bg-card) !important;
+    border: 2px solid rgba(255, 154, 158, 0.15) !important;
+    box-shadow: 0 12px 40px rgba(255, 154, 158, 0.1) !important;
+    color: var(--cute-text-primary) !important;
+    
+    .semi-card-header-title {
+      color: var(--cute-text-primary) !important;
+    }
+    
+    .semi-card-body {
+      color: var(--cute-text-secondary) !important;
+    }
   }
   
   .semi-input {
-    background: rgba(26, 26, 46, 0.95) !important;
-    border: 2px solid rgba(255, 154, 158, 0.3) !important;
-    color: rgba(255, 255, 255, 0.95) !important;
+    background: var(--cute-bg-secondary) !important;
+    border: 2px solid rgba(255, 154, 158, 0.2) !important;
+    color: var(--cute-text-primary) !important;
     
     &::placeholder {
-      color: rgba(196, 113, 245, 0.5) !important;
+      color: var(--cute-text-tertiary) !important;
+    }
+    
+    &:focus {
+      border-color: var(--cute-purple) !important;
+      box-shadow: 0 0 0 2px rgba(196, 113, 245, 0.2) !important;
+    }
+  }
+  
+  .semi-button {
+    &.semi-button-primary {
+      background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-pink) 100%) !important;
+      border: none !important;
+      color: white !important;
+    }
+    
+    &.semi-button-secondary {
+      background: var(--cute-bg-secondary) !important;
+      border: 2px solid rgba(255, 154, 158, 0.3) !important;
+      color: var(--cute-text-primary) !important;
+      
+      &:hover {
+        background: var(--cute-bg-primary) !important;
+        border-color: var(--cute-purple) !important;
+      }
     }
   }
   
   .semi-table {
-    background: rgba(26, 26, 46, 0.95) !important;
-    border: 2px solid rgba(255, 154, 158, 0.2) !important;
+    background: var(--cute-bg-card) !important;
+    border: 2px solid rgba(255, 154, 158, 0.15) !important;
+    
+    .semi-table-thead {
+      .semi-table-row-head {
+        background: linear-gradient(90deg, rgba(255, 154, 158, 0.2) 0%, rgba(196, 113, 245, 0.2) 100%) !important;
+        color: var(--cute-text-primary) !important;
+      }
+    }
+    
+    .semi-table-tbody {
+      .semi-table-row {
+        &:nth-child(even) {
+          background: rgba(255, 154, 158, 0.05) !important;
+        }
+        
+        &:hover {
+          background: rgba(255, 154, 158, 0.1) !important;
+        }
+        
+        .semi-table-cell {
+          color: var(--cute-text-secondary) !important;
+          border-bottom-color: rgba(255, 154, 158, 0.1) !important;
+        }
+      }
+    }
   }
   
   .semi-tabs {
     .semi-tabs-bar {
-      background: rgba(26, 26, 46, 0.95) !important;
-      border: 2px solid rgba(255, 154, 158, 0.2) !important;
+      background: var(--cute-bg-secondary) !important;
+      border: 2px solid rgba(255, 154, 158, 0.15) !important;
+      
+      .semi-tabs-tab {
+        color: var(--cute-text-secondary) !important;
+        
+        &:hover {
+          background: rgba(255, 154, 158, 0.1) !important;
+          color: var(--cute-text-primary) !important;
+        }
+        
+        &.semi-tabs-tab-active {
+          background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-pink) 100%) !important;
+          color: white !important;
+        }
+      }
     }
     
     .semi-tabs-content {
-      background: rgba(26, 26, 46, 0.95) !important;
-      border: 2px solid rgba(255, 154, 158, 0.2) !important;
+      background: var(--cute-bg-card) !important;
+      border: 2px solid rgba(255, 154, 158, 0.15) !important;
+      color: var(--cute-text-secondary) !important;
     }
   }
   
   .semi-modal {
     .semi-modal-content {
-      background: rgba(26, 26, 46, 0.98) !important;
-      border: 2px solid rgba(255, 154, 158, 0.3) !important;
-      box-shadow: 0 20px 80px rgba(255, 154, 158, 0.2) !important;
+      background: var(--cute-bg-overlay) !important;
+      border: 2px solid rgba(255, 154, 158, 0.2) !important;
+      box-shadow: 0 20px 80px rgba(255, 154, 158, 0.15) !important;
+      color: var(--cute-text-primary) !important;
+      
+      .semi-modal-header {
+        border-bottom-color: rgba(255, 154, 158, 0.2) !important;
+        
+        .semi-modal-title {
+          color: var(--cute-text-primary) !important;
+        }
+      }
+      
+      .semi-modal-body {
+        color: var(--cute-text-secondary) !important;
+      }
     }
+  }
+  
+  .semi-banner {
+    &.semi-banner-info {
+      background: rgba(116, 185, 255, 0.1) !important;
+      border-color: rgba(116, 185, 255, 0.3) !important;
+      color: var(--cute-text-primary) !important;
+    }
+    
+    &.semi-banner-success {
+      background: rgba(123, 237, 159, 0.1) !important;
+      border-color: rgba(123, 237, 159, 0.3) !important;
+      color: var(--cute-text-primary) !important;
+    }
+    
+    &.semi-banner-warning {
+      background: rgba(255, 234, 167, 0.1) !important;
+      border-color: rgba(255, 234, 167, 0.3) !important;
+      color: var(--cute-text-primary) !important;
+    }
+    
+    &.semi-banner-danger {
+      background: rgba(255, 154, 158, 0.1) !important;
+      border-color: rgba(255, 154, 158, 0.3) !important;
+      color: var(--cute-text-primary) !important;
+    }
+  }
+  
+  // 修复导航栏文字颜色
+  .semi-navigation {
+    .semi-navigation-item {
+      color: var(--cute-text-secondary) !important;
+      
+      &:hover {
+        color: var(--cute-text-primary) !important;
+        background: rgba(255, 154, 158, 0.1) !important;
+      }
+      
+      &.semi-navigation-item-selected {
+        color: var(--cute-purple) !important;
+        background: rgba(196, 113, 245, 0.15) !important;
+      }
+    }
+    
+    .semi-navigation-item-icon {
+      color: inherit !important;
+    }
+    
+    .semi-navigation-item-text {
+      color: inherit !important;
+    }
+  }
+  
+  // 修复表单标签颜色
+  .semi-form-field-label {
+    color: var(--cute-text-primary) !important;
+  }
+  
+  // 修复文本颜色
+  .semi-typography {
+    color: var(--cute-text-primary) !important;
+  }
+  
+  // 修复选择器
+  .semi-select {
+    background: var(--cute-bg-secondary) !important;
+    border-color: rgba(255, 154, 158, 0.2) !important;
+    color: var(--cute-text-primary) !important;
+    
+    .semi-select-selection {
+      background: transparent !important;
+      color: var(--cute-text-primary) !important;
+    }
+    
+    .semi-select-selection-placeholder {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 修复下拉菜单
+  .semi-dropdown-menu {
+    background: var(--cute-bg-overlay) !important;
+    border: 2px solid rgba(255, 154, 158, 0.15) !important;
+    
+    .semi-dropdown-item {
+      color: var(--cute-text-secondary) !important;
+      
+      &:hover {
+        background: rgba(255, 154, 158, 0.1) !important;
+        color: var(--cute-text-primary) !important;
+      }
+    }
+  }
+  
+  // 修复Toast通知
+  .toast-container .Toastify__toast {
+    background: var(--cute-bg-overlay) !important;
+    color: var(--cute-text-primary) !important;
+    border: 1px solid rgba(255, 154, 158, 0.2) !important;
+    
+    &.Toastify__toast--success {
+      background: rgba(123, 237, 159, 0.15) !important;
+      border-color: rgba(123, 237, 159, 0.3) !important;
+    }
+    
+    &.Toastify__toast--error {
+      background: rgba(255, 154, 158, 0.15) !important;
+      border-color: rgba(255, 154, 158, 0.3) !important;
+    }
+    
+    &.Toastify__toast--warning {
+      background: rgba(255, 234, 167, 0.15) !important;
+      border-color: rgba(255, 234, 167, 0.3) !important;
+    }
+    
+    &.Toastify__toast--info {
+      background: rgba(116, 185, 255, 0.15) !important;
+      border-color: rgba(116, 185, 255, 0.3) !important;
+    }
+  }
+  
+  // 修复弹出框
+  .semi-popover {
+    .semi-popover-content {
+      background: var(--cute-bg-overlay) !important;
+      border: 1px solid rgba(255, 154, 158, 0.2) !important;
+      color: var(--cute-text-primary) !important;
+    }
+    
+    .semi-popover-arrow {
+      border-color: var(--cute-bg-overlay) transparent transparent transparent !important;
+    }
+  }
+  
+  // 修复工具提示
+  .semi-tooltip {
+    .semi-tooltip-content {
+      background: var(--cute-bg-overlay) !important;
+      color: var(--cute-text-primary) !important;
+      border: 1px solid rgba(255, 154, 158, 0.2) !important;
+    }
+    
+    .semi-tooltip-arrow {
+      border-top-color: var(--cute-bg-overlay) !important;
+    }
+  }
+  
+  // 修复分页器
+  .semi-page {
+    background: var(--cute-bg-secondary) !important;
+    border-color: rgba(255, 154, 158, 0.2) !important;
+    color: var(--cute-text-primary) !important;
+    
+    &:hover {
+      background: var(--cute-bg-primary) !important;
+      border-color: var(--cute-purple) !important;
+    }
+    
+    &.semi-page-active {
+      background: var(--cute-purple) !important;
+      border-color: var(--cute-purple) !important;
+      color: white !important;
+    }
+  }
+  
+  // 修复开关组件
+  .semi-switch {
+    &.semi-switch-checked {
+      background: var(--cute-purple) !important;
+    }
+    
+    &:not(.semi-switch-checked) {
+      background: rgba(255, 154, 158, 0.2) !important;
+    }
+  }
+  
+  // 修复步骤条
+  .semi-steps {
+    .semi-steps-item {
+      .semi-steps-item-title {
+        color: var(--cute-text-primary) !important;
+      }
+      
+      .semi-steps-item-description {
+        color: var(--cute-text-secondary) !important;
+      }
+      
+      .semi-steps-item-icon {
+        background: var(--cute-bg-secondary) !important;
+        border-color: rgba(255, 154, 158, 0.3) !important;
+        color: var(--cute-text-primary) !important;
+      }
+      
+      &.semi-steps-item-active {
+        .semi-steps-item-icon {
+          background: var(--cute-purple) !important;
+          border-color: var(--cute-purple) !important;
+          color: white !important;
+        }
+      }
+    }
+  }
+  
+  // 修复树形控件
+  .semi-tree {
+    background: var(--cute-bg-card) !important;
+    
+    .semi-tree-option {
+      color: var(--cute-text-secondary) !important;
+      
+      &:hover {
+        background: rgba(255, 154, 158, 0.1) !important;
+        color: var(--cute-text-primary) !important;
+      }
+      
+      &.semi-tree-option-selected {
+        background: rgba(196, 113, 245, 0.15) !important;
+        color: var(--cute-purple) !important;
+      }
+    }
+  }
+  
+  // 修复日期选择器
+  .semi-datepicker {
+    background: var(--cute-bg-secondary) !important;
+    border-color: rgba(255, 154, 158, 0.2) !important;
+    color: var(--cute-text-primary) !important;
+    
+    .semi-datepicker-selection-placeholder {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  .semi-datepicker-panel {
+    background: var(--cute-bg-overlay) !important;
+    border: 1px solid rgba(255, 154, 158, 0.2) !important;
+    
+    .semi-datepicker-month-grid-left {
+      .semi-datepicker-day {
+        color: var(--cute-text-secondary) !important;
+        
+        &:hover {
+          background: rgba(255, 154, 158, 0.1) !important;
+          color: var(--cute-text-primary) !important;
+        }
+        
+        &.semi-datepicker-day-selected {
+          background: var(--cute-purple) !important;
+          color: white !important;
+        }
+      }
+    }
+  }
+  
+  // 修复时间选择器
+  .semi-timepicker {
+    background: var(--cute-bg-secondary) !important;
+    border-color: rgba(255, 154, 158, 0.2) !important;
+    color: var(--cute-text-primary) !important;
+    
+    .semi-timepicker-selection-placeholder {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 修复徽章
+  .semi-badge {
+    .semi-badge-count {
+      background: var(--cute-pink) !important;
+      color: white !important;
+    }
+  }
+  
+  // 修复标签页面板
+  .semi-tab-pane {
+    color: var(--cute-text-secondary) !important;
+  }
+  
+  // 修复collapse折叠面板
+  .semi-collapse {
+    background: var(--cute-bg-card) !important;
+    border: 1px solid rgba(255, 154, 158, 0.15) !important;
+    
+    .semi-collapse-item {
+      border-bottom-color: rgba(255, 154, 158, 0.1) !important;
+      
+      .semi-collapse-header {
+        background: var(--cute-bg-secondary) !important;
+        color: var(--cute-text-primary) !important;
+        
+        &:hover {
+          background: rgba(255, 154, 158, 0.1) !important;
+        }
+      }
+      
+      .semi-collapse-content {
+        background: var(--cute-bg-card) !important;
+        color: var(--cute-text-secondary) !important;
+      }
+    }
+  }
+  
+  // 修复头像组件
+  .semi-avatar {
+    background: var(--cute-bg-secondary) !important;
+    color: var(--cute-text-primary) !important;
+    border: 1px solid rgba(255, 154, 158, 0.2) !important;
+  }
+  
+  // 修复侧边表单标签
+  .semi-form-field {
+    .semi-form-field-label-text {
+      color: var(--cute-text-primary) !important;
+    }
+    
+    .semi-form-field-error-message {
+      color: var(--cute-pink) !important;
+    }
+    
+    .semi-form-field-help-text {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 修复深色模式滚动条
+  ::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(26, 26, 46, 0.5) !important;
+    border-radius: 10px !important;
+    border: 2px solid rgba(255, 154, 158, 0.1) !important;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, rgba(255, 154, 158, 0.8) 0%, rgba(196, 113, 245, 0.8) 100%) !important;
+    border-radius: 10px !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(255, 154, 158, 0.2) !important;
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(196, 113, 245, 0.9) 0%, rgba(116, 185, 255, 0.9) 100%) !important;
+    }
+    
+    &:active {
+      background: linear-gradient(135deg, rgba(116, 185, 255, 0.9) 0%, rgba(123, 237, 159, 0.9) 100%) !important;
+    }
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: rgba(26, 26, 46, 0.5) !important;
+    border-radius: 10px !important;
+  }
+  
+  // 修复所有硬编码的颜色
+  .semi-typography h1,
+  .semi-typography h2,
+  .semi-typography h3,
+  .semi-typography h4,
+  .semi-typography h5,
+  .semi-typography h6 {
+    color: var(--cute-text-primary) !important;
+  }
+  
+  p, div, span, label {
+    &:not(.semi-button):not(.semi-tag):not(.semi-badge) {
+      color: var(--cute-text-secondary) !important;
+    }
+  }
+  
+  // 修复链接颜色
+  a {
+    color: var(--cute-purple) !important;
+    
+    &:hover {
+      color: var(--cute-pink) !important;
+    }
+    
+    &:visited {
+      color: rgba(196, 113, 245, 0.8) !important;
+    }
+  }
+  
+  // 修复图标颜色
+  .semi-icon {
+    color: inherit !important;
+  }
+  
+  // 修复特定组件的颜色问题
+  .semi-descriptions-item-th {
+    color: var(--cute-text-primary) !important;
+  }
+  
+  .semi-descriptions-item-td {
+    color: var(--cute-text-secondary) !important;
+  }
+  
+  // 修复列表项
+  .semi-list-item {
+    color: var(--cute-text-secondary) !important;
+    border-bottom-color: var(--cute-border-medium) !important;
+  }
+  
+  // 修复空状态
+  .semi-empty {
+    .semi-empty-description {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 修复统计数字
+  .semi-statistic {
+    .semi-statistic-content-value {
+      color: var(--cute-text-primary) !important;
+    }
+    
+    .semi-statistic-content-suffix,
+    .semi-statistic-content-prefix {
+      color: var(--cute-text-secondary) !important;
+    }
+  }
+  
+  // 修复面包屑
+  .semi-breadcrumb {
+    .semi-breadcrumb-item {
+      color: var(--cute-text-secondary) !important;
+      
+      &:last-child {
+        color: var(--cute-text-primary) !important;
+      }
+    }
+    
+    .semi-breadcrumb-separator {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 修复评分组件
+  .semi-rating {
+    .semi-rating-star {
+      color: var(--cute-text-tertiary) !important;
+      
+      &.semi-rating-star-full {
+        color: var(--cute-peach) !important;
+      }
+      
+      &.semi-rating-star-half {
+        color: var(--cute-peach) !important;
+      }
+    }
+  }
+  
+  // 修复时间轴
+  .semi-timeline {
+    .semi-timeline-item-content {
+      color: var(--cute-text-secondary) !important;
+    }
+    
+    .semi-timeline-item-time {
+      color: var(--cute-text-tertiary) !important;
+    }
+  }
+  
+  // 全局文本颜色修复 - 确保所有文本在深色模式下可见
+  * {
+    &:not(.semi-button):not(.semi-tag):not(.semi-badge):not(.semi-icon) {
+      color: inherit;
+    }
+  }
+  
+  // 强制修复某些顽固的颜色问题
+  body * {
+    &[style*="color: #"] {
+      color: var(--cute-text-primary) !important;
+    }
+  }
+  
+  // 修复 React Toastify 在深色模式下的样式
+  .Toastify__toast-container {
+    .Toastify__toast {
+      background: var(--cute-bg-overlay) !important;
+      color: var(--cute-text-primary) !important;
+      
+      .Toastify__toast-body {
+        color: var(--cute-text-primary) !important;
+      }
+      
+      .Toastify__progress-bar {
+        background: var(--cute-purple) !important;
+      }
+      
+      .Toastify__close-button {
+        color: var(--cute-text-secondary) !important;
+      }
+    }
+  }
+  
+  // 修复日志和数据表格的特殊样式
+  .log-table {
+    background: var(--cute-bg-card) !important;
+    color: var(--cute-text-secondary) !important;
+    
+    .log-entry {
+      border-bottom-color: var(--cute-border-medium) !important;
+      color: var(--cute-text-secondary) !important;
+    }
+    
+    .log-timestamp {
+      color: var(--cute-text-tertiary) !important;
+    }
+    
+    .log-level-info {
+      color: var(--cute-blue) !important;
+    }
+    
+    .log-level-warn {
+      color: var(--cute-peach) !important;
+    }
+    
+    .log-level-error {
+      color: var(--cute-pink) !important;
+    }
+  }
+  
+  // 修复代码块和预格式化文本
+  pre, code {
+    background: var(--cute-bg-secondary) !important;
+    color: var(--cute-text-primary) !important;
+    border: 1px solid var(--cute-border-medium) !important;
+  }
+  
+  // 修复高亮文本
+  mark {
+    background: rgba(255, 154, 158, 0.3) !important;
+    color: var(--cute-text-primary) !important;
+  }
+  
+  // 修复引用文本
+  blockquote {
+    background: var(--cute-bg-secondary) !important;
+    border-left: 4px solid var(--cute-purple) !important;
+    color: var(--cute-text-secondary) !important;
   }
 }
 

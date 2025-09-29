@@ -123,11 +123,11 @@ const LoginForm = () => {
   return (
     <AuthFormLayout title={t('用户登录')} className="login-form-container fade-in-up">
       <Form className="beautiful-form" style={{
-        background: 'rgba(255, 255, 255, 0.9)',
+        background: 'var(--cute-bg-card)',
         backdropFilter: 'blur(20px)',
         borderRadius: '20px',
         padding: '40px',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+        border: '1px solid var(--cute-border-medium)',
         boxShadow: '0 16px 64px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease',
       }}>
@@ -143,8 +143,8 @@ const LoginForm = () => {
           }}
           inputStyle={{
             borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid var(--cute-border-light)',
+            background: 'var(--cute-bg-secondary)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s ease',
             padding: '12px 16px',
@@ -163,8 +163,8 @@ const LoginForm = () => {
           }}
           inputStyle={{
             borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid var(--cute-border-light)',
+            background: 'var(--cute-bg-secondary)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s ease',
             padding: '12px 16px',
@@ -212,7 +212,7 @@ const LoginForm = () => {
           <Link 
             to='/register' 
             style={{
-              color: '#667eea',
+              color: 'var(--cute-purple)',
               textDecoration: 'none',
               fontWeight: '600',
               transition: 'all 0.3s ease',
@@ -230,7 +230,7 @@ const LoginForm = () => {
           <Link 
             to='/reset'
             style={{
-              color: '#667eea',
+              color: 'var(--cute-purple)',
               textDecoration: 'none',
               fontWeight: '600',
               transition: 'all 0.3s ease',

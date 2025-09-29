@@ -370,7 +370,7 @@ const SiderBar = () => {
   // Custom group label style - 现代化美化
   const groupLabelStyle = {
     padding: '12px 20px 8px 20px',
-    color: '#667eea',
+    color: 'var(--cute-purple)',
     fontSize: '11px',
     fontWeight: '700',
     textTransform: 'uppercase',
@@ -390,8 +390,8 @@ const SiderBar = () => {
         style={{
           width: isCollapsed ? '60px' : (openedKeys.includes('chat') ? '240px' : '200px'),
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-          borderRight: '1px solid rgba(255, 255, 255, 0.2)',
-          background: 'rgba(255, 255, 255, 0.95)',
+          borderRight: '1px solid var(--cute-border-medium)',
+          background: 'var(--cute-bg-overlay)',
           backdropFilter: 'blur(20px)',
           borderRadius: styleState.isMobile ? '0' : '0 16px 16px 0',
           position: 'relative',
