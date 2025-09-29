@@ -134,6 +134,31 @@ func prependSystemPromptIfNeeded(c *gin.Context, textRequest *dto.GeneralOpenAIR
 	}
 }
 
+func processSystemRoleToUser(c *gin.Context, textRequest *dto.GeneralOpenAIRequest, relayInfo *relaycommon.RelayInfo) {
+	// Check if system_role_to_user is enabled in channel settings
+	if systemToUser, ok := relayInfo.ChannelSetting[constant.ChannelSettingSystemRoleToUser].(bool); !ok || !systemToUser {
+		return
+	}
+
+	// Only process chat completions
+	if relayInfo.RelayMode != relayconstant.RelayModeChatCompletions {
+		return
+	}
+
+	// Process messages: convert system and other non-user/assistant roles to user messages
+	for i, message := range textRequest.Messages {
+		if message.Role != "user" && message.Role != "assistant" {
+			// Convert message content to <{role}>content</{role}> format and set role to user
+			originalContent := message.StringContent()
+			newContent := fmt.Sprintf("<%s>%s</%s>", message.Role, originalContent, message.Role)
+			
+			newContentBytes, _ := json.Marshal(newContent)
+			textRequest.Messages[i].Content = newContentBytes
+			textRequest.Messages[i].Role = "user"
+		}
+	}
+}
+
 func TextHelper(c *gin.Context) (openaiErr *dto.OpenAIErrorWithStatusCode) {
 
 	relayInfo := relaycommon.GenRelayInfo(c)
@@ -147,6 +172,9 @@ func TextHelper(c *gin.Context) (openaiErr *dto.OpenAIErrorWithStatusCode) {
 
 	// Prepend channel system prompt if configured
 	prependSystemPromptIfNeeded(c, textRequest, relayInfo)
+
+	// Process system role to user conversion if configured
+	processSystemRoleToUser(c, textRequest, relayInfo)
 
 	tokenGroup := c.GetString("token_group")
 	if setting.ShouldCheckPromptSensitiveWithGroup(tokenGroup) {

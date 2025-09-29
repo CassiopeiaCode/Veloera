@@ -17,6 +17,12 @@
    - 控制与上游的流式请求方式，可选值为 `default` 或 `NON_STREAM_ONLY`
    - 当设置为 `NON_STREAM_ONLY` 且客户端请求流式时，将改为向上游发起非流式请求，并以伪流形式返回结果
 
+5. system_role_to_user
+   - 用于标识是否将所有 `role` 为 `system` 或其他非 `user` 且非 `assistant` 的消息转换为 `user` 消息
+   - 类型为布尔值，设置为 true 时启用转换
+   - 转换格式：将原消息内容包装为 `<{原角色}>内容</{原角色}>` 的形式，并将角色改为 `user`
+   - 例如：`{"role": "system", "content": "你是一个助手"}` 会被转换为 `{"role": "user", "content": "<system>你是一个助手</system>"}`
+
 --------------------------------------------------------------
 
 ## JSON 格式示例
@@ -28,7 +34,8 @@
     "force_format": true,
    "thinking_to_content": true,
     "proxy": "socks5://xxxxxxx",
-    "stream_support": "NON_STREAM_ONLY"
+    "stream_support": "NON_STREAM_ONLY",
+    "system_role_to_user": true
 }
 ```
 
