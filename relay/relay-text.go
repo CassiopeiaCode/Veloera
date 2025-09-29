@@ -151,7 +151,7 @@ func processSystemRoleToUser(c *gin.Context, textRequest *dto.GeneralOpenAIReque
 			// Convert message content to <{role}>content</{role}> format and set role to user
 			originalContent := message.StringContent()
 			newContent := fmt.Sprintf("<%s>%s</%s>", message.Role, originalContent, message.Role)
-			
+
 			newContentBytes, _ := json.Marshal(newContent)
 			textRequest.Messages[i].Content = newContentBytes
 			textRequest.Messages[i].Role = "user"

@@ -89,13 +89,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-container fade-in-up">
+    <div className="home-container veloera-cute-fade-in">
       {/* Warning banner for chat content logging */}
       {statusState?.status?.log_chat_content_enabled && (
         <Banner
           type="warning"
           description="此站点管理员可查看您的对话内容"
-          className="fade-in-down delay-1 hover-lift"
+          className="veloera-cute-card veloera-hover-lift"
           style={{
             margin: '0 0 24px 0',
             borderRadius: '16px',
@@ -112,11 +112,11 @@ const Home = () => {
             bordered={false}
             headerLine={false}
             title={
-              <span className="card-title-gradient">
+              <span className="veloera-cute-title">
                 {t('系统状况')}
               </span>
             }
-            className="main-card fade-in-up delay-2 hover-lift"
+            className="veloera-cute-card veloera-cute-main-card veloera-hover-lift"
             bodyStyle={{ 
               padding: '24px', 
               background: 'transparent'
@@ -159,7 +159,7 @@ const Home = () => {
                       {t('系统信息')}
                     </span>
                   }
-                  className="info-card fade-in-right delay-3 hover-scale"
+                  className="veloera-cute-card veloera-hover-lift"
                   headerExtraContent={
                     <span
                       style={{

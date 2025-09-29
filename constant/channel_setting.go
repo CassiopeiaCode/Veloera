@@ -21,6 +21,6 @@ var (
 	ChanelSettingProxy              = "proxy"               // Proxy 代理
 	ChannelSettingThinkingToContent = "thinking_to_content" // ThinkingToContent
 	ChannelSettingStreamSupport     = "stream_support"      // StreamSupport 控制上游流式请求行为
-	ChannelSettingSystemRoleToUser  = "system_role_to_user"  // SystemRoleToUser 将system和其他非user/assistant角色消息转换为user消息
+	ChannelSettingSystemRoleToUser  = "system_role_to_user" // SystemRoleToUser 将system和其他非user/assistant角色消息转换为user消息
 	StreamSupportNonStreamOnly      = "NON_STREAM_ONLY"     // StreamSupport 仅非流式请求
 )

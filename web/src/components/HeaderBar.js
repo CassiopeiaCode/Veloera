@@ -468,7 +468,7 @@ const HeaderBar = () => {
                     checked={theme === 'dark'}
                     uncheckedText='🌙'
                     style={switchStyle}
-                    className="theme-switch"
+                    className="theme-switch veloera-cute-switch"
                     onChange={(checked) => {
                       // 添加切换动画效果
                       document.body.style.transition = 'all 0.3s ease';
