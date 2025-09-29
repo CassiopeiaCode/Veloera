@@ -1754,9 +1754,9 @@ body[theme-mode="dark"] {
 // 选项卡 - 彩虹糖果标签 🌈
 .semi-tabs {
   .semi-tabs-bar {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.98) 0%, 
-      rgba(255, 245, 250, 0.98) 100%) !important;
+    // background: linear-gradient(135deg, 
+    //   rgba(255, 255, 255, 0.98) 0%, 
+    //   rgba(255, 245, 250, 0.98) 100%) !important;
     border: 3px solid var(--cute-sky) !important;
     border-radius: 20px 20px 0 0 !important;
     padding: 10px 20px 0 !important;
