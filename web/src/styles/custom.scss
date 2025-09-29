@@ -611,9 +611,9 @@ body {
       background: rgba(255, 255, 255, 0.9) !important; 
       transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
       
-     /* &:nth-child(even) {
+     &:nth-child(even) {
           background: rgba(255, 245, 250, 0.9) !important;
-      }*/
+      }
       
       &:hover {
         background: linear-gradient(90deg, 
@@ -1027,9 +1027,13 @@ body[theme-mode="dark"] {
     
     .semi-table-tbody {
       background: rgba(200, 162, 200, 0.10) !important;
+      
       .semi-table-row {
         &:nth-child(even) {
           background: rgba(200, 162, 200, 0.05) !important;
+        }
+        &:nth-child(odd) {
+          background: rgba(200, 162, 200, 0.10) !important;
         }
         
         &:hover {
