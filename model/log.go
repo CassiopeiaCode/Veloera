@@ -349,7 +349,7 @@ func SumUsedQuota(logType int, startTimestamp int64, endTimestamp int64, modelNa
 	tx = tx.Where("type = ?", LogTypeConsume)
 	rpmTpmQuery = rpmTpmQuery.Where("type = ?", LogTypeConsume)
 
-		// 执行查询
+	// 执行查询
 	tx.Scan(&stat)
 	rpmTpmQuery.Scan(&stat)
 

@@ -131,9 +131,17 @@ const dropdownStyle = {
   overflow: 'hidden',
 };
 
-// 自定义主题切换开关样式
+// 自定义主题切换开关样式 - 增强版
 const switchStyle = {
   margin: '0 8px',
+  borderRadius: '20px',
+  background: 'var(--cute-glass-bg)',
+  backdropFilter: 'blur(10px)',
+  border: '1px solid var(--cute-border-light)',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  position: 'relative',
+  overflow: 'hidden',
 };
 
 const HeaderBar = () => {
@@ -452,7 +460,7 @@ const HeaderBar = () => {
                     <Nav.Item itemKey={'new-year'} text={'🎉'} />
                   </Dropdown>
                 )}
-                {/* <Nav.Item itemKey={'about'} icon={<IconHelpCircle />} /> */}
+                {/* 主题切换开关 - 增强版 */}
                 <>
                   <Switch
                     checkedText='🌞'
@@ -460,8 +468,15 @@ const HeaderBar = () => {
                     checked={theme === 'dark'}
                     uncheckedText='🌙'
                     style={switchStyle}
+                    className="theme-switch"
                     onChange={(checked) => {
+                      // 添加切换动画效果
+                      document.body.style.transition = 'all 0.3s ease';
                       setTheme(checked);
+                      
+                      // 提供用户反馈
+                      const message = checked ? '🌙 已切换至夜间模式' : '🌞 已切换至日间模式';
+                      // 这里可以添加轻量级的反馈提示
                     }}
                   />
                 </>

@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
-import { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext(null);
 export const useTheme = () => useContext(ThemeContext);
@@ -27,24 +27,51 @@ export const useSetTheme = () => useContext(SetThemeContext);
 export const ThemeProvider = ({ children }) => {
   const [theme, _setTheme] = useState(() => {
     try {
-      return localStorage.getItem('theme-mode') || null;
+      const savedTheme = localStorage.getItem('theme-mode');
+      // 如果没有保存的主题，则根据系统偏好设置默认主题
+      if (!savedTheme) {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return prefersDark ? 'dark' : 'light';
+      }
+      return savedTheme;
     } catch {
-      return null;
+      // 默认跟随系统主题
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return prefersDark ? 'dark' : 'light';
     }
   });
 
   const setTheme = useCallback((input) => {
-    _setTheme(input ? 'dark' : 'light');
+    const newTheme = input ? 'dark' : 'light';
+    _setTheme(newTheme);
 
     const body = document.body;
-    if (!input) {
-      body.removeAttribute('theme-mode');
-      localStorage.setItem('theme-mode', 'light');
-    } else {
+    const html = document.documentElement;
+    
+    if (newTheme === 'dark') {
       body.setAttribute('theme-mode', 'dark');
+      html.setAttribute('theme-mode', 'dark');
       localStorage.setItem('theme-mode', 'dark');
+    } else {
+      body.removeAttribute('theme-mode');
+      html.removeAttribute('theme-mode');
+      localStorage.setItem('theme-mode', 'light');
     }
   }, []);
+
+  // 初始化时应用主题
+  useEffect(() => {
+    const body = document.body;
+    const html = document.documentElement;
+    
+    if (theme === 'dark') {
+      body.setAttribute('theme-mode', 'dark');
+      html.setAttribute('theme-mode', 'dark');
+    } else {
+      body.removeAttribute('theme-mode');
+      html.removeAttribute('theme-mode');
+    }
+  }, [theme]);
 
   return (
     <SetThemeContext.Provider value={setTheme}>
