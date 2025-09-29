@@ -129,7 +129,7 @@ const PageLayout = () => {
               left: 0,
               top: '56px',
               zIndex: 99,
-              background: 'var(--semi-color-bg-1)',
+              background: 'var(--cute-bg-overlay)',
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
               border: 'none',
               paddingRight: '0',

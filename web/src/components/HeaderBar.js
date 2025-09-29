@@ -62,8 +62,8 @@ import InboxIcon from './InboxIcon';
 // 自定义顶部栏样式 - 现代化美化
 const headerStyle = {
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-  background: 'rgba(255, 255, 255, 0.95)',
+  borderBottom: '1px solid var(--cute-border-medium)',
+  background: 'var(--cute-bg-overlay)',
   backdropFilter: 'blur(20px)',
   transition: 'all 0.3s ease',
   width: '100%',

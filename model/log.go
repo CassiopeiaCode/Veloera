@@ -315,7 +315,7 @@ func SumUsedQuota(logType int, startTimestamp int64, endTimestamp int64, modelNa
 	tx := LOG_DB.Table("logs").Select("sum(quota) quota")
 
 	// 为rpm和tpm创建单独的查询
-	rpmTpmQuery := LOG_DB.Table("logs").Select("count(*) rpm, sum(prompt_tokens) + sum(completion_tokens) tpm")
+	rpmTpmQuery := LOG_DB.Table("logs").Select("count(*) as request_count, sum(prompt_tokens) + sum(completion_tokens) as token_count")
 
 	if username != "" {
 		tx = tx.Where("username = ?", username)
@@ -349,9 +349,30 @@ func SumUsedQuota(logType int, startTimestamp int64, endTimestamp int64, modelNa
 	tx = tx.Where("type = ?", LogTypeConsume)
 	rpmTpmQuery = rpmTpmQuery.Where("type = ?", LogTypeConsume)
 
-	// 执行查询
+	// 执行配额查询
 	tx.Scan(&stat)
-	rpmTpmQuery.Scan(&stat)
+
+	// 执行RPM和TPM查询
+	var counts struct {
+		RequestCount int `json:"request_count"`
+		TokenCount   int `json:"token_count"`
+	}
+	rpmTpmQuery.Scan(&counts)
+
+	// 计算时间间隔（分钟）
+	var timeRangeMinutes float64 = 1 // 默认为1分钟，避免除零
+	if startTimestamp != 0 && endTimestamp != 0 {
+		timeRangeMinutes = float64(endTimestamp-startTimestamp) / 60.0
+	}
+
+	// 计算RPM和TPM
+	if timeRangeMinutes > 0 {
+		stat.Rpm = int(float64(counts.RequestCount) / timeRangeMinutes)
+		stat.Tpm = int(float64(counts.TokenCount) / timeRangeMinutes)
+	} else {
+		stat.Rpm = 0
+		stat.Tpm = 0
+	}
 
 	return stat
 }
