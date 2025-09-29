@@ -11,7 +11,7 @@
       color: var(--cute-text-dark);
       text-align: center;
       margin-bottom: 30px;
-      background: linear-gradient(45deg, var(--cute-pink), var(--cute-purple), var(--cute-blue));
+      background: linear-gradient(45deg, var(--cute-sky), var(--cute-purple), var(--cute-blue));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -37,7 +37,7 @@
           left: 0;
           width: 50px;
           height: 3px;
-          background: linear-gradient(90deg, var(--cute-pink), var(--cute-purple));
+          background: linear-gradient(90deg, var(--cute-sky), var(--cute-purple));
           border-radius: 2px;
         }
       }

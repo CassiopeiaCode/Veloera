@@ -131,7 +131,7 @@ body {
 }
 
 .card-title-gradient {
-  background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%);
+  background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -211,7 +211,7 @@ body {
       font-weight: 500;
       
       &.version-badge {
-        background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%);
+        background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%);
         color: white;
         padding: 4px 12px;
         border-radius: 20px;
@@ -248,7 +248,7 @@ body {
       }
       
       &:hover {
-        color: var(--cute-pink);
+        color: var(--cute-sky);
         text-shadow: 0 0 12px rgba(255, 154, 158, 0.6);
         transform: translateY(-2px);
         
@@ -362,7 +362,7 @@ body {
   &.cute-rainbow-card {
     border: 2px solid transparent !important;
     background: linear-gradient(white, white) padding-box, 
-                linear-gradient(135deg, var(--cute-pink), var(--cute-purple), var(--cute-blue)) border-box !important;
+                linear-gradient(135deg, var(--cute-sky), var(--cute-purple), var(--cute-blue)) border-box !important;
   }
   
   &.cute-heart-card {
@@ -425,7 +425,7 @@ body {
   }
   
   &.semi-button-primary {
-    background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+    background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
     border: none !important;
     color: white !important;
     
@@ -565,7 +565,7 @@ body {
 .semi-table {
   border-radius: 20px !important;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 245, 250, 0.95) 100%) !important;
-  border: 3px solid var(--cute-pink) !important;
+  border: 3px solid var(--cute-sky) !important;
   box-shadow: 
     0 12px 40px rgba(255, 154, 158, 0.2),
     inset 0 2px 8px rgba(255, 255, 255, 0.8) !important;
@@ -586,7 +586,7 @@ body {
   }
   
   .semi-table-thead {
-    background: linear-gradient(90deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+    background: linear-gradient(90deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
     
     .semi-table-row {
       .semi-table-row-head {
@@ -625,7 +625,7 @@ body {
       }
       
       .semi-table-cell {
-        border-bottom: 1px dotted var(--cute-pink) !important;
+        border-bottom: 1px dotted var(--cute-sky) !important;
         padding: 15px 20px !important;
         font-family: var(--cute-font-body) !important;
         color: var(--cute-text-dark) !important;
@@ -636,27 +636,27 @@ body {
   
   .semi-table-pagination {
     background: rgba(255, 255, 255, 0.95) !important;
-    border-top: 2px dotted var(--cute-pink) !important;
+    border-top: 2px dotted var(--cute-skyimportant;
     padding: 20px !important;
     
     .semi-page {
       border-radius: 15px !important;
-      border: 2px solid var(--cute-pink) !important;
+      border: 2px solid var(--cute-skyportant;
       background: white !important;
-      color: var(--cute-pink) !important;
+      color: var(--cute-sky) !important;
       font-family: var(--cute-font-body) !important;
       font-weight: 600 !important;
       transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
       
       &:hover {
-        background: var(--cute-pink) !important;
+        background: var(--cute-sky) !important;
         color: white !important;
         transform: scale(1.1) !important;
         animation: bounce 0.6s ease-in-out !important;
       }
       
       &.semi-page-active {
-        background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+        background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
         color: white !important;
         border-color: var(--cute-purple) !important;
         animation: heartbeat 1.5s ease-in-out infinite !important;
@@ -678,7 +678,7 @@ body {
       rgba(255, 255, 255, 0.98) 0%, 
       rgba(255, 245, 250, 0.98) 50%,
       rgba(250, 240, 255, 0.98) 100%) !important;
-    border: 4px solid var(--cute-pink) !important;
+    border: 4px solid var(--cute-sky) !important;
     box-shadow: 
       0 20px 60px rgba(255, 154, 158, 0.3),
       inset 0 4px 12px rgba(255, 255, 255, 0.8),
@@ -715,7 +715,7 @@ body {
   }
   
   .semi-modal-header {
-    background: linear-gradient(90deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+    background: linear-gradient(90deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
     color: white !important;
     font-family: var(--cute-font-title) !important;
     font-weight: 700 !important;
@@ -818,7 +818,7 @@ body {
     }
     
     &.semi-navigation-item-selected {
-      background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+      background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
       color: white !important;
       box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4) !important;
       transform: scale(1.05) !important;
@@ -997,7 +997,7 @@ body[theme-mode="dark"] {
   
   .semi-button {
     &.semi-button-primary {
-      background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-pink) 100%) !important;
+      background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-sky) 100%) !important;
       border: none !important;
       color: white !important;
     }
@@ -1057,7 +1057,7 @@ body[theme-mode="dark"] {
         }
         
         &.semi-tabs-tab-active {
-          background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-pink) 100%) !important;
+          background: linear-gradient(135deg, var(--cute-purple) 0%, var(--cute-sky) 100%) !important;
           color: white !important;
         }
       }
@@ -1357,7 +1357,7 @@ body[theme-mode="dark"] {
   // 修复徽章
   .semi-badge {
     .semi-badge-count {
-      background: var(--cute-pink) !important;
+      background: var(--cute-sky) !important;
       color: white !important;
     }
   }
@@ -1405,7 +1405,7 @@ body[theme-mode="dark"] {
     }
     
     .semi-form-field-error-message {
-      color: var(--cute-pink) !important;
+      color: var(--cute-sky) !important;
     }
     
     .semi-form-field-help-text {
@@ -1466,7 +1466,7 @@ body[theme-mode="dark"] {
     color: var(--cute-purple) !important;
     
     &:hover {
-      color: var(--cute-pink) !important;
+      color: var(--cute-sky) !important;
     }
     
     &:visited {
@@ -1611,7 +1611,7 @@ body[theme-mode="dark"] {
     }
     
     .log-level-error {
-      color: var(--cute-pink) !important;
+      color: var(--cute-sky) !important;
     }
   }
   
@@ -1707,13 +1707,13 @@ body[theme-mode="dark"] {
 }
 
 // 可爱颜色工具类
-.cute-text-pink { color: var(--cute-pink) !important; }
+.cute-text-pink { color: var(--cute-sky) !important; }
 .cute-text-purple { color: var(--cute-purple) !important; }
 .cute-text-blue { color: var(--cute-blue) !important; }
 .cute-text-mint { color: var(--cute-mint) !important; }
 .cute-text-peach { color: var(--cute-peach) !important; }
 
-.cute-bg-pink { background-color: var(--cute-pink) !important; }
+.cute-bg-pink { background-color: var(--cute-sky) !important; }
 .cute-bg-purple { background-color: var(--cute-purple) !important; }
 .cute-bg-blue { background-color: var(--cute-blue) !important; }
 .cute-bg-mint { background-color: var(--cute-mint) !important; }
@@ -1757,7 +1757,7 @@ body[theme-mode="dark"] {
     background: linear-gradient(135deg, 
       rgba(255, 255, 255, 0.98) 0%, 
       rgba(255, 245, 250, 0.98) 100%) !important;
-    border: 3px solid var(--cute-pink) !important;
+    border: 3px solid var(--cute-sky) !important;
     border-radius: 20px 20px 0 0 !important;
     padding: 10px 20px 0 !important;
     position: relative !important;
@@ -1805,9 +1805,9 @@ body[theme-mode="dark"] {
       }
       
       &.semi-tabs-tab-active {
-        background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+        background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
         color: white !important;
-        border: 2px solid var(--cute-pink) !important;
+        border: 2px solid var(--cute-sky) !important;
         transform: translateY(-5px) scale(1.1) !important;
         box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4) !important;
         animation: heartbeat 2s ease-in-out infinite !important;
@@ -1828,7 +1828,7 @@ body[theme-mode="dark"] {
     background: linear-gradient(135deg, 
       rgba(255, 255, 255, 0.98) 0%, 
       rgba(250, 240, 255, 0.98) 100%) !important;
-    border: 3px solid var(--cute-pink) !important;
+    border: 3px solid var(--cute-sky) !important;
     border-top: none !important;
     border-radius: 0 0 20px 20px !important;
     padding: 30px !important;
@@ -1872,7 +1872,7 @@ body[theme-mode="dark"] {
     position: absolute !important;
     inset: 0 !important;
     padding: 3px !important;
-    background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
+    background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
     border-radius: 20px !important;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
     mask-composite: xor !important;
@@ -1961,7 +1961,7 @@ body[theme-mode="dark"] {
     border-color: var(--cute-peach) !important;
     
     &::before {
-      background: linear-gradient(135deg, var(--cute-peach) 0%, var(--cute-pink) 100%) !important;
+      background: linear-gradient(135deg, var(--cute-peach) 0%, var(--cute-sky) 100%) !important;
     }
     
     .semi-notification-icon {
@@ -1970,14 +1970,14 @@ body[theme-mode="dark"] {
   }
   
   &.semi-notification-error {
-    border-color: var(--cute-pink) !important;
+    border-color: var(--cute-sky) !important;
     
     &::before {
-      background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+      background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
     }
     
     .semi-notification-icon {
-      color: var(--cute-pink) !important;
+      color: var(--cute-sky) !important;
     }
   }
 }
@@ -1997,7 +1997,7 @@ body[theme-mode="dark"] {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--cute-pink) 0%, var(--cute-purple) 100%) !important;
+  background: linear-gradient(135deg, var(--cute-sky) 0%, var(--cute-purple) 100%) !important;
   border-radius: 10px !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow: 0 2px 8px rgba(255, 154, 158, 0.3) !important;
@@ -2022,7 +2022,7 @@ body[theme-mode="dark"] {
 .semi-spin {
   .semi-spin-indicator {
     border: 4px solid rgba(255, 154, 158, 0.3) !important;
-    border-top: 4px solid var(--cute-pink) !important;
+    border-top: 4px solid var(--cute-sky) !important;
     border-radius: 50% !important;
     animation: cuteSpinning 1s ease-in-out infinite, heartbeat 2s ease-in-out infinite !important;
     
@@ -2041,7 +2041,7 @@ body[theme-mode="dark"] {
 @keyframes cuteSpinning {
   0% { 
     transform: rotate(0deg); 
-    border-top-color: var(--cute-pink);
+    border-top-color: var(--cute-sky);
   }
   25% { 
     border-top-color: var(--cute-purple);
@@ -2055,19 +2055,19 @@ body[theme-mode="dark"] {
   }
   100% { 
     transform: rotate(360deg); 
-    border-top-color: var(--cute-pink);
+    border-top-color: var(--cute-sky);
   }
 }
 
 // 可爱进度条 📊
 .semi-progress {
   background: rgba(255, 255, 255, 0.6) !important;
-  border: 2px solid var(--cute-pink) !important;
+  border: 2px solid var(--cute-sky) !important;
   border-radius: 20px !important;
   box-shadow: inset 0 2px 8px rgba(255, 154, 158, 0.2) !important;
   
   .semi-progress-bar {
-    background: linear-gradient(90deg, var(--cute-pink) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
+    background: linear-gradient(90deg, var(--cute-sky) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
     border-radius: 18px !important;
     position: relative !important;
     animation: progressFlow 3s ease-in-out infinite !important;
@@ -2095,7 +2095,7 @@ body[theme-mode="dark"] {
 
 @keyframes progressFlow {
   0%, 100% {
-    background: linear-gradient(90deg, var(--cute-pink) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
+    background: linear-gradient(90deg, var(--cute-sky) 0%, var(--cute-purple) 50%, var(--cute-blue) 100%) !important;
   }
   33% {
     background: linear-gradient(90deg, var(--cute-purple) 0%, var(--cute-blue) 50%, var(--cute-mint) 100%) !important;
@@ -2108,10 +2108,10 @@ body[theme-mode="dark"] {
 // 可爱标签 🏷️
 .semi-tag {
   border-radius: 20px !important;
-  border: 2px solid var(--cute-pink) !important;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.9) 0%, 
-    rgba(255, 245, 250, 0.9) 100%) !important;
+  border: 2px solid var(--cute-sky) !important;
+  // background: linear-gradient(135deg, 
+  //   rgba(255, 255, 255, 0.9) 0%, 
+  //   rgba(255, 245, 250, 0.9) 100%) !important;
   color: var(--cute-text-dark) !important;
   font-family: var(--cute-font-body) !important;
   font-weight: 600 !important;
@@ -2158,7 +2158,7 @@ body[theme-mode="dark"] {
   }
   
   &.semi-tag-red {
-    border-color: var(--cute-pink) !important;
+    border-color: var(--cute-sky) !important;
     
     &::before {
       content: '💖' !important;
