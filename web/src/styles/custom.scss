@@ -1026,6 +1026,7 @@ body[theme-mode="dark"] {
     }
     
     .semi-table-tbody {
+      background: rgba(255, 154, 158, 0.10) !important;
       .semi-table-row {
         &:nth-child(even) {
           background: rgba(255, 154, 158, 0.05) !important;
