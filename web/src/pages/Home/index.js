@@ -89,13 +89,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-container cute-fade-in-up">
+    <div className="home-container fade-in-up">
       {/* Warning banner for chat content logging */}
       {statusState?.status?.log_chat_content_enabled && (
         <Banner
           type="warning"
           description="此站点管理员可查看您的对话内容"
-          className="cute-fade-in-up delay-1 cute-hover-lift"
+          className="fade-in-down delay-1 hover-lift"
           style={{
             margin: '0 0 24px 0',
             borderRadius: '16px',

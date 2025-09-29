@@ -24,7 +24,6 @@ import HeaderBar from './components/HeaderBar';
 import 'semantic-ui-offline/semantic.min.css';
 import './index.css';
 import './styles/global.scss';
-import './styles/index.scss';
 import { UserProvider } from './context/User';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
