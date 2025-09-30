@@ -290,3 +290,69 @@ Safe Cute Enhancements - 安全的可爱美化样式
   background-clip: text;
   font-weight: 600;
 }
+
+
+
+/* ------------------------------------------------------------------ */
+/* Dark-mode: 强制覆盖表格在 dark 下被设置为深色面，以抵消 custom.scss 中的浅色/渐变规则 */
+/* 放在文件末尾以提高 cascade 优先级；使用 !important 防止被现有强规则覆盖 */
+/* ------------------------------------------------------------------ */
+
+body[theme-mode="dark"] {
+  /* 补充主题变量（若未定义） */
+  --veloera-text: #E6EEF8;
+  --veloera-text-muted: #AEB7C9;
+}
+
+/* 优先选择带有 .veloera-theme 的场景，同时兼容未包裹的 .semi-table */
+body[theme-mode="dark"] .veloera-theme .semi-table,
+body[theme-mode="dark"] .semi-table {
+  background: rgba(16, 18, 24, 1) !important;
+  border-color: rgba(255,255,255,0.04) !important;
+  box-shadow: none !important; /* 减弱过强阴影，使表格与背景更融合 */
+  backdrop-filter: none !important; /* 降低毛玻璃，提升小字体可读性 */
+}
+
+body[theme-mode="dark"] .veloera-theme .semi-table .semi-table-thead,
+body[theme-mode="dark"] .semi-table .semi-table-thead {
+  color: var(--veloera-text) !important;
+}
+
+body[theme-mode="dark"] .veloera-theme .semi-table .semi-table-tbody .semi-table-row,
+body[theme-mode="dark"] .semi-table .semi-table-tbody .semi-table-row {
+  background: transparent !important;
+  background-image: none !important; /* 取消任何渐变背景 */
+  color: var(--veloera-text) !important;
+  transform: none !important;
+  transition: background 0.25s var(--veloera-ease) !important;
+}
+
+/* 轻微交替行色，仅作为分隔，不使用白色或高亮 */
+body[theme-mode="dark"] .veloera-theme .semi-table .semi-table-tbody .semi-table-row:nth-child(even),
+body[theme-mode="dark"] .semi-table .semi-table-tbody .semi-table-row:nth-child(even) {
+  background: rgba(255,255,255,0.02) !important;
+}
+
+body[theme-mode="dark"] .veloera-theme .semi-table .semi-table-tbody .semi-table-row:hover,
+body[theme-mode="dark"] .semi-table .semi-table-tbody .semi-table-row:hover {
+  background: rgba(255,255,255,0.03) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5) !important;
+  transform: none !important;
+}
+
+/* 防止子元素（单元格等）带白底或渐变 */
+body[theme-mode="dark"] .veloera-theme .semi-table .semi-table-tbody .semi-table-row > .semi-table-cell,
+body[theme-mode="dark"] .semi-table .semi-table-tbody .semi-table-row > .semi-table-cell {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: inherit !important;
+}
+
+/* 可访问性的焦点环（键盘导航友好） */
+body[theme-mode="dark"] .semi-table a:focus,
+body[theme-mode="dark"] .semi-table button:focus,
+body[theme-mode="dark"] .semi-table .semi-button:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.12) !important;
+  border-color: rgba(102,126,234,0.9) !important;
+}

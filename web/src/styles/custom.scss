@@ -591,7 +591,7 @@ body {
     .semi-table-row {
       .semi-table-row-head {
         background: transparent !important;
-        color: white !important;
+        // color: white !important;
         font-weight: 600 !important;
         font-family: var(--cute-font-title) !important;
         border-bottom: none !important;
@@ -608,7 +608,7 @@ body {
   
   .semi-table-tbody {
     .semi-table-row {
-      background: rgba(255, 255, 255, 0.9) !important; 
+      // background: rgba(255, 255, 255, 0.9) !important; 
       transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
       
      &:nth-child(even) {
