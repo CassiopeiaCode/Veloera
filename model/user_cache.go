@@ -29,19 +29,21 @@ import (
 
 // UserBase struct represents the cached data structure
 type UserBase struct {
-	Id       int    `json:"id"`
-	Group    string `json:"group"`
-	Email    string `json:"email"`
-	Quota    int    `json:"quota"`
-	Status   int    `json:"status"`
-	Username string `json:"username"`
-	Setting  string `json:"setting"`
-	Role     int    `json:"role"`
+	Id                int    `json:"id"`
+	Group             string `json:"group"`
+	Email             string `json:"email"`
+	Quota             int    `json:"quota"`
+	SubscriptionQuota int    `json:"subscription_quota"`
+	Status            int    `json:"status"`
+	Username          string `json:"username"`
+	Setting           string `json:"setting"`
+	Role              int    `json:"role"`
 }
 
 func (user *UserBase) WriteContext(c *gin.Context) {
+	totalQuota := user.Quota + user.SubscriptionQuota
 	c.Set(constant.ContextKeyUserGroup, user.Group)
-	c.Set(constant.ContextKeyUserQuota, user.Quota)
+	c.Set(constant.ContextKeyUserQuota, totalQuota)
 	c.Set(constant.ContextKeyUserStatus, user.Status)
 	c.Set(constant.ContextKeyUserEmail, user.Email)
 	c.Set("username", user.Username)
@@ -121,14 +123,15 @@ func GetUserCache(userId int) (userCache *UserBase, err error) {
 
 	// Create cache object from user data
 	userCache = &UserBase{
-		Id:       user.Id,
-		Group:    user.Group,
-		Quota:    user.Quota,
-		Status:   user.Status,
-		Username: user.Username,
-		Setting:  user.Setting,
-		Email:    user.Email,
-		Role:     user.Role,
+		Id:                user.Id,
+		Group:             user.Group,
+		Quota:             user.Quota,
+		SubscriptionQuota: user.SubscriptionQuota,
+		Status:            user.Status,
+		Username:          user.Username,
+		Setting:           user.Setting,
+		Email:             user.Email,
+		Role:              user.Role,
 	}
 
 	return userCache, nil
@@ -159,6 +162,17 @@ func cacheDecrUserQuota(userId int, delta int64) error {
 	return cacheIncrUserQuota(userId, -delta)
 }
 
+func cacheIncrUserSubscriptionQuota(userId int, delta int64) error {
+	if !common.RedisEnabled {
+		return nil
+	}
+	return common.RedisHIncrBy(getUserCacheKey(userId), "SubscriptionQuota", delta)
+}
+
+func cacheDecrUserSubscriptionQuota(userId int, delta int64) error {
+	return cacheIncrUserSubscriptionQuota(userId, -delta)
+}
+
 // Helper functions to get individual fields if needed
 func getUserGroupCache(userId int) (string, error) {
 	cache, err := GetUserCache(userId)
@@ -174,6 +188,14 @@ func getUserQuotaCache(userId int) (int, error) {
 		return 0, err
 	}
 	return cache.Quota, nil
+}
+
+func getUserSubscriptionQuotaCache(userId int) (int, error) {
+	cache, err := GetUserCache(userId)
+	if err != nil {
+		return 0, err
+	}
+	return cache.SubscriptionQuota, nil
 }
 
 func getUserStatusCache(userId int) (int, error) {
@@ -225,6 +247,13 @@ func updateUserGroupCache(userId int, group string) error {
 		return nil
 	}
 	return common.RedisHSetField(getUserCacheKey(userId), "Group", group)
+}
+
+func updateUserSubscriptionQuotaCache(userId int, quota int) error {
+	if !common.RedisEnabled {
+		return nil
+	}
+	return common.RedisHSetField(getUserCacheKey(userId), "SubscriptionQuota", fmt.Sprintf("%d", quota))
 }
 
 func updateUserNameCache(userId int, username string) error {
