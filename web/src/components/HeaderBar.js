@@ -59,34 +59,25 @@ import { StyleContext } from '../context/Style/index.js';
 import { StatusContext } from '../context/Status/index.js';
 import InboxIcon from './InboxIcon';
 
-// 自定义顶部栏样式 - 现代化美化
+// 自定义顶部栏样式
 const headerStyle = {
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-  borderBottom: '1px solid var(--cute-border-medium)',
-  background: 'var(--cute-bg-overlay)',
-  backdropFilter: 'blur(20px)',
+  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+  borderBottom: '1px solid var(--semi-color-border)',
+  background: 'var(--semi-color-bg-0)',
   transition: 'all 0.3s ease',
   width: '100%',
-  borderRadius: '0 0 16px 16px',
-  position: 'sticky',
-  top: 0,
-  zIndex: 1000,
 };
 
-// 自定义顶部栏按钮样式 - 现代化美化
+// 自定义顶部栏按钮样式
 const headerItemStyle = {
-  borderRadius: '12px',
-  margin: '0 6px',
-  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  position: 'relative',
-  overflow: 'hidden',
+  borderRadius: '4px',
+  margin: '0 4px',
+  transition: 'all 0.3s ease',
 };
 
-// 自定义顶部栏按钮悬停样式 - 现代化美化
+// 自定义顶部栏按钮悬停样式
 const headerItemHoverStyle = {
-  backgroundColor: 'rgba(102, 126, 234, 0.1)',
-  transform: 'translateY(-2px)',
-  boxShadow: '0 4px 12px rgba(102, 126, 234, 0.2)',
+  backgroundColor: 'var(--semi-color-primary-light-default)',
   color: 'var(--semi-color-primary)',
 };
 
@@ -131,17 +122,9 @@ const dropdownStyle = {
   overflow: 'hidden',
 };
 
-// 自定义主题切换开关样式 - 增强版
+// 自定义主题切换开关样式
 const switchStyle = {
   margin: '0 8px',
-  borderRadius: '20px',
-  background: 'var(--cute-glass-bg)',
-  backdropFilter: 'blur(10px)',
-  border: '1px solid var(--cute-border-light)',
-  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  position: 'relative',
-  overflow: 'hidden',
 };
 
 const HeaderBar = () => {
@@ -460,7 +443,7 @@ const HeaderBar = () => {
                     <Nav.Item itemKey={'new-year'} text={'🎉'} />
                   </Dropdown>
                 )}
-                {/* 主题切换开关 - 增强版 */}
+                {/* <Nav.Item itemKey={'about'} icon={<IconHelpCircle />} /> */}
                 <>
                   <Switch
                     checkedText='🌞'
@@ -468,15 +451,8 @@ const HeaderBar = () => {
                     checked={theme === 'dark'}
                     uncheckedText='🌙'
                     style={switchStyle}
-                    className="theme-switch veloera-cute-switch"
                     onChange={(checked) => {
-                      // 添加切换动画效果
-                      document.body.style.transition = 'all 0.3s ease';
                       setTheme(checked);
-                      
-                      // 提供用户反馈
-                      const message = checked ? '🌙 已切换至夜间模式' : '🌞 已切换至日间模式';
-                      // 这里可以添加轻量级的反馈提示
                     }}
                   />
                 </>

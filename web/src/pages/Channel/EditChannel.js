@@ -1965,7 +1965,7 @@ const updateModelsCallback = useCallback((newModels) => {
               placeholder={
                 t(
                   '此项可选，用于配置渠道特定设置，为一个 JSON 字符串，例如：',
-                ) + '\n{\n  "force_format": true,\n  "system_role_to_user": true\n}'
+                ) + '\n{\n  "force_format": true\n}'
               }
               name='setting'
               onChange={(value) => {
@@ -1988,7 +1988,6 @@ const updateModelsCallback = useCallback((newModels) => {
                     JSON.stringify(
                       {
                         force_format: true,
-                        system_role_to_user: true,
                       },
                       null,
                       2,

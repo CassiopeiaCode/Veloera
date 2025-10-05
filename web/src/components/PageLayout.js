@@ -129,7 +129,7 @@ const PageLayout = () => {
               left: 0,
               top: '56px',
               zIndex: 99,
-              background: 'var(--cute-bg-overlay)',
+              background: 'var(--semi-color-bg-1)',
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
               border: 'none',
               paddingRight: '0',
@@ -155,7 +155,6 @@ const PageLayout = () => {
           }}
         >
           <Content
-            className="page-container fade-in-up"
             style={{
               flex: '1 0 auto',
               overflowY: styleState.isMobile ? 'visible' : 'auto',
@@ -163,14 +162,9 @@ const PageLayout = () => {
               padding: styleState.shouldInnerPadding ? '24px' : '0',
               position: 'relative',
               marginTop: styleState.isMobile ? '2px' : '0',
-              background: 'transparent',
-              borderRadius: styleState.isMobile ? '0' : '16px 0 0 0',
-              transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
           >
-            <div className="content-wrapper" style={{ minHeight: '100%' }}>
-              <App />
-            </div>
+            <App />
           </Content>
           <Layout.Footer
             style={{

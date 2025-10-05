@@ -358,51 +358,40 @@ const SiderBar = () => {
     setIsCollapsed(styleState.siderCollapsed);
   }, [styleState.siderCollapsed]);
 
-  // Custom divider style - 现代化美化
+  // Custom divider style
   const dividerStyle = {
-    margin: '12px 16px',
-    opacity: 0.3,
-    background: 'linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent)',
-    height: '1px',
-    border: 'none',
+    margin: '8px 0',
+    opacity: 0.6,
   };
 
-  // Custom group label style - 现代化美化
+  // Custom group label style
   const groupLabelStyle = {
-    padding: '12px 20px 8px 20px',
-    color: 'var(--cute-purple)',
-    fontSize: '11px',
-    fontWeight: '700',
+    padding: '8px 16px',
+    color: 'var(--semi-color-text-2)',
+    fontSize: '12px',
+    fontWeight: 'bold',
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    background: 'rgba(102, 126, 234, 0.05)',
-    borderRadius: '8px',
-    margin: '8px 12px',
-    backdropFilter: 'blur(10px)',
-    position: 'relative',
-    overflow: 'hidden',
+    letterSpacing: '0.5px',
   };
 
   return (
     <>
       <Nav
-        className='custom-sidebar-nav sidebar-container fade-in-left'
+        className='custom-sidebar-nav'
         style={{
           width: isCollapsed ? '60px' : (openedKeys.includes('chat') ? '240px' : '200px'),
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-          borderRight: '1px solid var(--cute-border-medium)',
-          background: 'var(--cute-bg-overlay)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: styleState.isMobile ? '0' : '0 16px 16px 0',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+          borderRight: '1px solid var(--semi-color-border)',
+          background: 'var(--semi-color-bg-1)',
+          borderRadius: styleState.isMobile ? '0' : '0 8px 8px 0',
           position: 'relative',
           zIndex: 95,
           height: '100%',
-          overflow: 'hidden',
+          overflow: 'hidden', // 让CSS flexbox处理滚动
           display: 'flex',
           flexDirection: 'column',
-          transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         }}
-        limitIndent={false}
+        limitIndent={false} // 允许更灵活的缩进控制
         defaultIsCollapsed={
           localStorage.getItem('default_collapse_sidebar') === 'true'
         }

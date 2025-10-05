@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
-
-/* 重置基础样式并应用现代化设计 */
 body {
   margin: 0;
   padding-top: 0;
@@ -26,10 +24,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scrollbar-width: none;
-  color: var(--cute-text-primary, var(--semi-color-text-0)) !important;
-  background-color: var(--cute-bg-base, var(--semi-color-bg-0)) !important;
+  color: var(--semi-color-text-0) !important;
+  background-color: var(--semi-color-bg-0) !important;
   height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -37,8 +34,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--cute-bg-base, var(--semi-color-bg-0));
-  transition: background-color 0.3s ease;
 }
 
 #root
