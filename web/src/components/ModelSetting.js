@@ -36,6 +36,7 @@ const ModelSetting = () => {
     'claude.thinking_adapter_enabled': true,
     'claude.default_max_tokens': '',
     'claude.thinking_adapter_budget_tokens_percentage': 0.8,
+    'claude.count_tokens_ratio': 1.0,
     'global.pass_through_request_enabled': false,
     'global.hide_upstream_error_enabled': false,
     'global.block_browser_extension_enabled': false,
@@ -74,6 +75,15 @@ const ModelSetting = () => {
         }
         if (item.key.endsWith('Enabled') || item.key.endsWith('enabled')) {
           newInputs[item.key] = item.value === 'true';
+        } else if (
+          item.key.endsWith('_percentage') ||
+          item.key.endsWith('_ratio') ||
+          item.key.endsWith('_count') ||
+          item.key.endsWith('_seconds')
+        ) {
+          // Parse numeric fields as numbers to avoid type mismatch with form components
+          const numValue = parseFloat(item.value);
+          newInputs[item.key] = isNaN(numValue) ? 0 : numValue;
         } else {
           newInputs[item.key] = item.value;
         }
