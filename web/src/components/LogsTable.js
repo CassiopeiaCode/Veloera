@@ -1228,10 +1228,22 @@ const LogsTable = () => {
                   
                   // 处理工具调用
                   if (msg.tool_calls && Array.isArray(msg.tool_calls)) {
-                    const toolsText = msg.tool_calls.map(tc =>
-                      `[工具调用: ${tc.function?.name || tc.name || '未知'}]`
-                    ).join('\n');
-                    contentText = contentText ? `${contentText}\n${toolsText}` : toolsText;
+                    const toolsText = msg.tool_calls.map(tc => {
+                      const name = tc.function?.name || tc.name || '未知';
+                      const args = tc.function?.arguments || tc.arguments || tc.input;
+                      let argsStr = '';
+                      if (args) {
+                        try {
+                          // 如果是字符串，尝试解析为JSON
+                          const argsObj = typeof args === 'string' ? JSON.parse(args) : args;
+                          argsStr = JSON.stringify(argsObj, null, 2);
+                        } catch {
+                          argsStr = typeof args === 'string' ? args : JSON.stringify(args);
+                        }
+                      }
+                      return argsStr ? `[工具调用: ${name}]\n参数: ${argsStr}` : `[工具调用: ${name}]`;
+                    }).join('\n\n');
+                    contentText = contentText ? `${contentText}\n\n${toolsText}` : toolsText;
                   }
                   
                   return `${roleDisplay}消息: ${contentText || JSON.stringify(msg)}`;
@@ -1294,10 +1306,22 @@ const LogsTable = () => {
             
             // 处理工具调用
             if (msg.tool_calls && Array.isArray(msg.tool_calls)) {
-              const toolsText = msg.tool_calls.map(tc =>
-                `[工具调用: ${tc.function?.name || tc.name || '未知'}]`
-              ).join('\n');
-              contentText = contentText ? `${contentText}\n${toolsText}` : toolsText;
+              const toolsText = msg.tool_calls.map(tc => {
+                const name = tc.function?.name || tc.name || '未知';
+                const args = tc.function?.arguments || tc.arguments || tc.input;
+                let argsStr = '';
+                if (args) {
+                  try {
+                    // 如果是字符串，尝试解析为JSON
+                    const argsObj = typeof args === 'string' ? JSON.parse(args) : args;
+                    argsStr = JSON.stringify(argsObj, null, 2);
+                  } catch {
+                    argsStr = typeof args === 'string' ? args : JSON.stringify(args);
+                  }
+                }
+                return argsStr ? `[工具调用: ${name}]\n参数: ${argsStr}` : `[工具调用: ${name}]`;
+              }).join('\n\n');
+              contentText = contentText ? `${contentText}\n\n${toolsText}` : toolsText;
             }
             
             inputContent = contentText ? `${role}消息: ${contentText}` : JSON.stringify(msg, null, 2);
