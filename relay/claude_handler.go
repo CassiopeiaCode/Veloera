@@ -53,7 +53,7 @@ func prependClaudeSystemPromptIfNeeded(c *gin.Context, textRequest *dto.ClaudeRe
 	if channelSystemPrompt == "" {
 		return
 	}
-	
+
 	// Prepend channel system prompt to Claude's system field
 	if textRequest.System != nil {
 		// If user already has a system prompt, prepend channel's system prompt
