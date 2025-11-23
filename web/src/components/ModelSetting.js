@@ -82,7 +82,8 @@ const ModelSetting = () => {
           item.key.endsWith('_seconds')
         ) {
           // Parse numeric fields as numbers to avoid type mismatch with form components
-          newInputs[item.key] = parseFloat(item.value);
+          const numValue = parseFloat(item.value);
+          newInputs[item.key] = isNaN(numValue) ? 0 : numValue;
         } else {
           newInputs[item.key] = item.value;
         }
