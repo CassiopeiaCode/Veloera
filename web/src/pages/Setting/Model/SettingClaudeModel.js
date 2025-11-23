@@ -94,7 +94,15 @@ export default function SettingClaudeModel(props) {
     const currentInputs = {};
     for (let key in props.options) {
       if (Object.keys(inputs).includes(key)) {
-        currentInputs[key] = props.options[key];
+        let value = props.options[key];
+        // 转换数字类型字段
+        if (key === 'claude.thinking_adapter_budget_tokens_percentage' ||
+            key === 'claude.count_tokens_ratio') {
+          value = parseFloat(value) || (key === 'claude.count_tokens_ratio' ? 1.0 : 0.8);
+        } else if (key === 'claude.thinking_adapter_enabled') {
+          value = value === 'true' || value === true;
+        }
+        currentInputs[key] = value;
       }
     }
     setInputs(currentInputs);
@@ -205,6 +213,8 @@ export default function SettingClaudeModel(props) {
                   extraText={t('0.1-1之间的小数')}
                   min={0.1}
                   max={1}
+                  step={0.01}
+                  precision={2}
                   onChange={(value) =>
                     setInputs({
                       ...inputs,
@@ -225,6 +235,7 @@ export default function SettingClaudeModel(props) {
                   min={0.01}
                   max={100}
                   step={0.1}
+                  precision={2}
                   onChange={(value) =>
                     setInputs({
                       ...inputs,
