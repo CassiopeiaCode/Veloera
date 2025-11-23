@@ -53,7 +53,7 @@ func prependClaudeSystemPromptIfNeeded(c *gin.Context, textRequest *dto.ClaudeRe
 	if channelSystemPrompt == "" {
 		return
 	}
-	
+
 	// Prepend channel system prompt to Claude's system field
 	if textRequest.System != nil {
 		// If user already has a system prompt, prepend channel's system prompt
@@ -81,6 +81,9 @@ func ClaudeHelper(c *gin.Context) (claudeError *dto.ClaudeErrorWithStatusCode) {
 
 	// Prepend channel system prompt if configured
 	prependClaudeSystemPromptIfNeeded(c, textRequest)
+
+	// Save request messages for logging purposes
+	relayInfo.PromptMessages = textRequest.Messages
 
 	if textRequest.Stream {
 		relayInfo.IsStream = true
