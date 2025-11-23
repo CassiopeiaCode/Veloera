@@ -54,6 +54,7 @@ export default function SettingClaudeModel(props) {
     'claude.thinking_adapter_enabled': true,
     'claude.default_max_tokens': '',
     'claude.thinking_adapter_budget_tokens_percentage': 0.8,
+    'claude.count_tokens_ratio': 1.0,
   });
   const refForm = useRef();
   const [inputsRow, setInputsRow] = useState(inputs);
@@ -208,6 +209,26 @@ export default function SettingClaudeModel(props) {
                     setInputs({
                       ...inputs,
                       'claude.thinking_adapter_budget_tokens_percentage': value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                <Form.InputNumber
+                  label={t('Count Tokens 统计倍率')}
+                  field={'claude.count_tokens_ratio'}
+                  initValue={1.0}
+                  extraText={t('仅对 /v1/messages/count_tokens 端点生效，用于调整返回的token数量。默认为1.0，设置为2.0将返回双倍token数')}
+                  min={0.01}
+                  max={100}
+                  step={0.1}
+                  onChange={(value) =>
+                    setInputs({
+                      ...inputs,
+                      'claude.count_tokens_ratio': value,
                     })
                   }
                 />

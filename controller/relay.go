@@ -520,9 +520,17 @@ func RelayTokenCount(c *gin.Context) {
 		return
 	}
 
+	// Apply count_tokens_ratio multiplier
+	ratio := model_setting.GetClaudeSettings().CountTokensRatio
+	if ratio <= 0 || ratio > 100 {
+		ratio = 1.0 // Fallback to 1.0 if invalid or out of range
+	}
+	// Use int64 for intermediate calculation to prevent overflow
+	adjustedTokenCount := int(int64(tokenCount) * int64(ratio*1000) / 1000)
+
 	// Return token count in Claude API format
 	c.JSON(http.StatusOK, gin.H{
-		"input_tokens": tokenCount,
+		"input_tokens": adjustedTokenCount,
 	})
 }
 
