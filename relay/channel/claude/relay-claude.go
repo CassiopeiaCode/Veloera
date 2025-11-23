@@ -633,6 +633,37 @@ type ClaudeResponseInfo struct {
 	Usage        *dto.Usage
 }
 
+// convertClaudeMessageToMap converts Claude message to map format similar to OpenAI
+func convertClaudeMessageToMap(msg dto.ClaudeMessage) map[string]interface{} {
+	msgMap := make(map[string]interface{})
+	msgMap["role"] = msg.Role
+	
+	// Handle content field
+	switch content := msg.Content.(type) {
+	case string:
+		msgMap["content"] = content
+	case []dto.ClaudeMediaMessage:
+		// Convert to a simplified format for logging
+		var contentItems []map[string]interface{}
+		for _, item := range content {
+			itemMap := make(map[string]interface{})
+			itemMap["type"] = item.Type
+			if item.Text != nil {
+				itemMap["text"] = *item.Text
+			}
+			if item.Type == "tool_use" {
+				itemMap["name"] = item.Name
+			}
+			contentItems = append(contentItems, itemMap)
+		}
+		msgMap["content"] = contentItems
+	default:
+		msgMap["content"] = content
+	}
+	
+	return msgMap
+}
+
 // recordConversationContent extracts and records input/output content for logging
 func recordConversationContent(info *relaycommon.RelayInfo, outputContent string) {
 	if info.Other == nil {
@@ -643,18 +674,30 @@ func recordConversationContent(info *relaycommon.RelayInfo, outputContent string
 	// Try OpenAI format first ([]dto.Message)
 	if messages, ok := info.PromptMessages.([]dto.Message); ok && len(messages) > 0 {
 		// Find the last user message as input
-		var userMessage *dto.Message
-		var contextMessages []dto.Message
+		var userMessage interface{}
+		var contextMessages []interface{}
+		var lastUserMessageIndex = -1
 
+		// Find last user message index
 		for i := len(messages) - 1; i >= 0; i-- {
 			if messages[i].Role == "user" {
-				if userMessage == nil {
-					userMessage = &messages[i]
-				}
+				lastUserMessageIndex = i
+				break
 			}
-			// Collect all messages except the last user message for context
-			if userMessage == nil || i != len(messages)-1 {
-				contextMessages = append([]dto.Message{messages[i]}, contextMessages...)
+		}
+
+		// Process all messages
+		for i, msg := range messages {
+			msgMap := make(map[string]interface{})
+			msgMap["role"] = msg.Role
+			msgMap["content"] = msg.Content
+
+			if msg.Role == "system" {
+				continue // Skip system messages
+			} else if i == lastUserMessageIndex {
+				userMessage = msgMap
+			} else {
+				contextMessages = append(contextMessages, msgMap)
 			}
 		}
 
@@ -663,26 +706,36 @@ func recordConversationContent(info *relaycommon.RelayInfo, outputContent string
 		}
 		if userMessage != nil {
 			info.Other["input_content"] = userMessage
-		} else {
+		} else if len(messages) > 0 {
 			// If no user message found, save the last message as input
-			if len(messages) > 0 {
-				info.Other["input_content"] = messages[len(messages)-1]
-			}
+			lastMsg := messages[len(messages)-1]
+			msgMap := make(map[string]interface{})
+			msgMap["role"] = lastMsg.Role
+			msgMap["content"] = lastMsg.Content
+			info.Other["input_content"] = msgMap
 		}
 	} else if claudeMessages, ok := info.PromptMessages.([]dto.ClaudeMessage); ok && len(claudeMessages) > 0 {
-		// Handle Claude format ([]dto.ClaudeMessage)
-		var userMessage *dto.ClaudeMessage
-		var contextMessages []dto.ClaudeMessage
+		// Handle Claude format ([]dto.ClaudeMessage) - convert to similar format as OpenAI
+		var userMessage interface{}
+		var contextMessages []interface{}
+		var lastUserMessageIndex = -1
 
+		// Find last user message index
 		for i := len(claudeMessages) - 1; i >= 0; i-- {
 			if claudeMessages[i].Role == "user" {
-				if userMessage == nil {
-					userMessage = &claudeMessages[i]
-				}
+				lastUserMessageIndex = i
+				break
 			}
-			// Collect all messages except the last user message for context
-			if userMessage == nil || i != len(claudeMessages)-1 {
-				contextMessages = append([]dto.ClaudeMessage{claudeMessages[i]}, contextMessages...)
+		}
+
+		// Process all messages
+		for i, msg := range claudeMessages {
+			msgMap := convertClaudeMessageToMap(msg)
+			
+			if i == lastUserMessageIndex {
+				userMessage = msgMap
+			} else {
+				contextMessages = append(contextMessages, msgMap)
 			}
 		}
 
@@ -691,14 +744,12 @@ func recordConversationContent(info *relaycommon.RelayInfo, outputContent string
 		}
 		if userMessage != nil {
 			info.Other["input_content"] = userMessage
-		} else {
+		} else if len(claudeMessages) > 0 {
 			// If no user message found, save the last message as input
-			if len(claudeMessages) > 0 {
-				info.Other["input_content"] = claudeMessages[len(claudeMessages)-1]
-			}
+			info.Other["input_content"] = convertClaudeMessageToMap(claudeMessages[len(claudeMessages)-1])
 		}
 	} else {
-		info.Other["input_content"] = info.PromptMessages // Fallback: save all input content
+		info.Other["input_content"] = info.PromptMessages
 	}
 
 	// Save output content (response text)

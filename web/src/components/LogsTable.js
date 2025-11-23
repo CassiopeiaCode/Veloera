@@ -1194,7 +1194,7 @@ const LogsTable = () => {
             // 如果是消息数组，格式化显示每条消息
             if (other.context.length > 0) {
               contextStr = other.context.map(msg => {
-                if (typeof msg === 'object' && msg !== null && msg.role && msg.content) {
+                if (typeof msg === 'object' && msg !== null && msg.role) {
                   // 根据角色格式化消息
                   let roleDisplay = '未知';
                   switch(msg.role) {
@@ -1210,7 +1210,31 @@ const LogsTable = () => {
                     default:
                       roleDisplay = msg.role;
                   }
-                  return `${roleDisplay}消息: ${msg.content}`;
+                  
+                  // 处理 content（可能是字符串或数组）
+                  let contentText = "";
+                  if (typeof msg.content === 'string') {
+                    contentText = msg.content;
+                  } else if (Array.isArray(msg.content)) {
+                    contentText = msg.content.map(item => {
+                      if (typeof item === 'string') return item;
+                      if (item.type === 'text') return item.text || '';
+                      if (item.type === 'image_url') return '[图片]';
+                      return JSON.stringify(item);
+                    }).join('\n');
+                  } else if (msg.content) {
+                    contentText = JSON.stringify(msg.content);
+                  }
+                  
+                  // 处理工具调用
+                  if (msg.tool_calls && Array.isArray(msg.tool_calls)) {
+                    const toolsText = msg.tool_calls.map(tc =>
+                      `[工具调用: ${tc.function?.name || tc.name || '未知'}]`
+                    ).join('\n');
+                    contentText = contentText ? `${contentText}\n${toolsText}` : toolsText;
+                  }
+                  
+                  return `${roleDisplay}消息: ${contentText || JSON.stringify(msg)}`;
                 } else {
                   // 无法解析的对象
                   return JSON.stringify(msg, null, 2);
@@ -1249,17 +1273,34 @@ const LogsTable = () => {
           // 格式化用户输入消息
           let inputContent = "";
           if (typeof other.input_content === 'object' && other.input_content !== null) {
-            if (other.input_content.role === 'user' && other.input_content.content) {
-              // 用户消息格式化显示
-              inputContent = `用户消息: ${other.input_content.content}`;
-            } else if (other.input_content.content) {
-              // 其他角色但有content
-              const role = other.input_content.role || '未知';
-              inputContent = `${role}消息: ${other.input_content.content}`;
-            } else {
-              // 无法解析的对象
-              inputContent = JSON.stringify(other.input_content, null, 2);
+            const msg = other.input_content;
+            const role = msg.role || '未知';
+            
+            // 处理 content 字段（可能是字符串或数组）
+            let contentText = "";
+            if (typeof msg.content === 'string') {
+              contentText = msg.content;
+            } else if (Array.isArray(msg.content)) {
+              // content 是数组格式，提取文本内容
+              contentText = msg.content.map(item => {
+                if (typeof item === 'string') return item;
+                if (item.type === 'text') return item.text || '';
+                if (item.type === 'image_url') return '[图片]';
+                return JSON.stringify(item);
+              }).join('\n');
+            } else if (msg.content) {
+              contentText = JSON.stringify(msg.content);
             }
+            
+            // 处理工具调用
+            if (msg.tool_calls && Array.isArray(msg.tool_calls)) {
+              const toolsText = msg.tool_calls.map(tc =>
+                `[工具调用: ${tc.function?.name || tc.name || '未知'}]`
+              ).join('\n');
+              contentText = contentText ? `${contentText}\n${toolsText}` : toolsText;
+            }
+            
+            inputContent = contentText ? `${role}消息: ${contentText}` : JSON.stringify(msg, null, 2);
           } else if (typeof other.input_content === 'string') {
             inputContent = other.input_content;
           } else {
