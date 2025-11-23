@@ -1,0 +1,13 @@
+This file indicates that tag v0.24.0 has been created locally.
+
+To push this tag to trigger Docker build and release workflows, run:
+git push origin v0.24.0
+
+This will trigger:
+- .github/workflows/docker.yml - Builds and publishes Docker images to ghcr.io
+- .github/workflows/release.yml - Builds binaries and creates GitHub release
+
+Tag details:
+- Name: v0.24.0
+- Message: Release version 0.24.0 - Trigger docker build and attach to packages
+- Commit: ed6c616736a97c47074c10bc9e2e25e8aab45dea
