@@ -82,6 +82,9 @@ func ClaudeHelper(c *gin.Context) (claudeError *dto.ClaudeErrorWithStatusCode) {
 	// Prepend channel system prompt if configured
 	prependClaudeSystemPromptIfNeeded(c, textRequest)
 
+	// Save request messages for logging purposes
+	relayInfo.PromptMessages = textRequest.Messages
+
 	if textRequest.Stream {
 		relayInfo.IsStream = true
 	}

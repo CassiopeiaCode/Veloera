@@ -640,6 +640,7 @@ func recordConversationContent(info *relaycommon.RelayInfo, outputContent string
 	}
 
 	// Save input content from PromptMessages
+	// Try OpenAI format first ([]dto.Message)
 	if messages, ok := info.PromptMessages.([]dto.Message); ok && len(messages) > 0 {
 		// Find the last user message as input
 		var userMessage *dto.Message
@@ -666,6 +667,34 @@ func recordConversationContent(info *relaycommon.RelayInfo, outputContent string
 			// If no user message found, save the last message as input
 			if len(messages) > 0 {
 				info.Other["input_content"] = messages[len(messages)-1]
+			}
+		}
+	} else if claudeMessages, ok := info.PromptMessages.([]dto.ClaudeMessage); ok && len(claudeMessages) > 0 {
+		// Handle Claude format ([]dto.ClaudeMessage)
+		var userMessage *dto.ClaudeMessage
+		var contextMessages []dto.ClaudeMessage
+
+		for i := len(claudeMessages) - 1; i >= 0; i-- {
+			if claudeMessages[i].Role == "user" {
+				if userMessage == nil {
+					userMessage = &claudeMessages[i]
+				}
+			}
+			// Collect all messages except the last user message for context
+			if userMessage == nil || i != len(claudeMessages)-1 {
+				contextMessages = append([]dto.ClaudeMessage{claudeMessages[i]}, contextMessages...)
+			}
+		}
+
+		if len(contextMessages) > 0 {
+			info.Other["context"] = contextMessages
+		}
+		if userMessage != nil {
+			info.Other["input_content"] = userMessage
+		} else {
+			// If no user message found, save the last message as input
+			if len(claudeMessages) > 0 {
+				info.Other["input_content"] = claudeMessages[len(claudeMessages)-1]
 			}
 		}
 	} else {
