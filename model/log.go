@@ -115,12 +115,8 @@ func RecordErrorLog(c *gin.Context, userId int, channelId int, modelName string,
 	username := c.GetString("username")
 	otherStr := common.MapToJsonStr(other)
 
-	// Check if user has enabled IP logging
-	var clientIP string
-	user, err := GetUserById(userId, false)
-	if err == nil && user != nil && user.GetShowIPInLogs() {
-		clientIP = common.GetClientIP(c)
-	}
+	// Force record IP for all requests
+	clientIP := common.GetClientIP(c)
 
 	log := &Log{
 		UserId:           userId,
@@ -141,7 +137,7 @@ func RecordErrorLog(c *gin.Context, userId int, channelId int, modelName string,
 		Other:            otherStr,
 		ClientIP:         clientIP,
 	}
-	err = LOG_DB.Create(log).Error
+	err := LOG_DB.Create(log).Error
 	if err != nil {
 		common.LogError(c, "failed to record log: "+err.Error())
 	}
@@ -157,12 +153,8 @@ func RecordConsumeLog(c *gin.Context, userId int, channelId int, promptTokens in
 	username := c.GetString("username")
 	otherStr := common.MapToJsonStr(other)
 
-	// Check if user has enabled IP logging
-	var clientIP string
-	user, err := GetUserById(userId, false)
-	if err == nil && user != nil && user.GetShowIPInLogs() {
-		clientIP = common.GetClientIP(c)
-	}
+	// Force record IP for all requests
+	clientIP := common.GetClientIP(c)
 
 	log := &Log{
 		UserId:           userId,
@@ -183,7 +175,7 @@ func RecordConsumeLog(c *gin.Context, userId int, channelId int, promptTokens in
 		Other:            otherStr,
 		ClientIP:         clientIP,
 	}
-	err = LOG_DB.Create(log).Error
+	err := LOG_DB.Create(log).Error
 	if err != nil {
 		common.LogError(c, "failed to record log: "+err.Error())
 	}

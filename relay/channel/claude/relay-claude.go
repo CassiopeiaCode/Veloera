@@ -857,6 +857,48 @@ func ClaudeStreamHandler(c *gin.Context, resp *http.Response, info *relaycommon.
 	}
 
 	HandleStreamFinalResponse(c, info, claudeInfo, requestMode)
+
+	// Record input and output content for logging
+	if info.Other == nil {
+		info.Other = make(map[string]interface{})
+	}
+
+	// Save input content from PromptMessages
+	if messages, ok := info.PromptMessages.([]dto.Message); ok && len(messages) > 0 {
+		// Find the last user message as input
+		var userMessage *dto.Message
+		var contextMessages []dto.Message
+
+		for i := len(messages) - 1; i >= 0; i-- {
+			if messages[i].Role == "user" {
+				if userMessage == nil {
+					userMessage = &messages[i]
+				}
+			}
+			// Collect all messages except the last user message for context
+			if userMessage == nil || i != len(messages)-1 {
+				contextMessages = append([]dto.Message{messages[i]}, contextMessages...)
+			}
+		}
+
+		if len(contextMessages) > 0 {
+			info.Other["context"] = contextMessages
+		}
+		if userMessage != nil {
+			info.Other["input_content"] = userMessage
+		} else {
+			// If no user message found, save the last message as input
+			if len(messages) > 0 {
+				info.Other["input_content"] = messages[len(messages)-1]
+			}
+		}
+	} else {
+		info.Other["input_content"] = info.PromptMessages // Fallback: save all input content
+	}
+
+	// Save output content (response text)
+	info.Other["output_content"] = claudeInfo.ResponseText.String()
+
 	return nil, claudeInfo.Usage
 }
 
@@ -924,7 +966,7 @@ func ClaudeTokenCountHandler(c *gin.Context, resp *http.Response, info *relaycom
 		if parseErr := json.Unmarshal(responseBody, &claudeError); parseErr == nil && claudeError.Error != nil {
 			return createTokenCountErrorFromClaude(claudeError.Error, resp.StatusCode), nil
 		}
-		
+
 		// If neither parsing worked, return a generic error
 		return createTokenCountError("invalid_response_format", "Invalid response format from Claude API", http.StatusInternalServerError), nil
 	}
@@ -1013,5 +1055,60 @@ func ClaudeHandler(c *gin.Context, resp *http.Response, requestMode int, info *r
 	if handleErr != nil {
 		return handleErr, nil
 	}
+
+	// Record input and output content for logging
+	// First, extract response text from the Claude response
+	var claudeResponse dto.ClaudeResponse
+	if err := common.DecodeJson(responseBody, &claudeResponse); err == nil {
+		// Extract all text content from the response
+		for _, content := range claudeResponse.Content {
+			if content.Type == "text" {
+				claudeInfo.ResponseText.WriteString(content.GetText())
+			} else if content.Type == "thinking" {
+				claudeInfo.ResponseText.WriteString(content.Thinking)
+			}
+		}
+	}
+
+	if info.Other == nil {
+		info.Other = make(map[string]interface{})
+	}
+
+	// Save input content from PromptMessages
+	if messages, ok := info.PromptMessages.([]dto.Message); ok && len(messages) > 0 {
+		// Find the last user message as input
+		var userMessage *dto.Message
+		var contextMessages []dto.Message
+
+		for i := len(messages) - 1; i >= 0; i-- {
+			if messages[i].Role == "user" {
+				if userMessage == nil {
+					userMessage = &messages[i]
+				}
+			}
+			// Collect all messages except the last user message for context
+			if userMessage == nil || i != len(messages)-1 {
+				contextMessages = append([]dto.Message{messages[i]}, contextMessages...)
+			}
+		}
+
+		if len(contextMessages) > 0 {
+			info.Other["context"] = contextMessages
+		}
+		if userMessage != nil {
+			info.Other["input_content"] = userMessage
+		} else {
+			// If no user message found, save the last message as input
+			if len(messages) > 0 {
+				info.Other["input_content"] = messages[len(messages)-1]
+			}
+		}
+	} else {
+		info.Other["input_content"] = info.PromptMessages // Fallback: save all input content
+	}
+
+	// Save output content (response text)
+	info.Other["output_content"] = claudeInfo.ResponseText.String()
+
 	return nil, claudeInfo.Usage
 }
