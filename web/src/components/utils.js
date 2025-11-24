@@ -75,7 +75,12 @@ export async function onGitHubOAuthClicked(github_client_id, openInNewTab = fals
 export async function onLinuxDOOAuthClicked(linuxdo_client_id, openInNewTab = false) {
   const state = await getOAuthState();
   if (!state) return;
-  const url = `https://connect.linux.do/oauth2/authorize?response_type=code&client_id=${linuxdo_client_id}&state=${state}`;
+  
+  // 附加原始域名信息到 state
+  const originDomain = window.location.host;
+  const finalState = state + '|' + btoa(originDomain);
+  
+  const url = `https://connect.linux.do/oauth2/authorize?response_type=code&client_id=${linuxdo_client_id}&state=${finalState}`;
   if (openInNewTab) {
     window.open(url);
   } else {
