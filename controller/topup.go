@@ -113,13 +113,16 @@ func RequestEpay(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "error", "data": "充值金额过低"})
 		return
 	}
+	// Epay-compatible protocols may require a fixed type=epay (e.g. LINUX DO Credit).
+	// Keep existing defaults (wxpay/alipay), but allow explicitly selecting "epay".
 	payType := "wxpay"
-	if req.PaymentMethod == "zfb" {
+	switch req.PaymentMethod {
+	case "zfb", "alipay":
 		payType = "alipay"
-	}
-	if req.PaymentMethod == "wx" {
-		req.PaymentMethod = "wxpay"
+	case "wx", "wxpay":
 		payType = "wxpay"
+	case "epay":
+		payType = "epay"
 	}
 	callBackAddress := service.GetCallbackAddress()
 	returnUrl, _ := url.Parse(setting.ServerAddress + "/app/wallet/topup-success")

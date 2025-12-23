@@ -486,17 +486,23 @@ const TopUp = () => {
                     name="payment-method"
                     style={{ rowGap: '0px' }}
                   >
-                    <Radio 
+                    <Radio
                       value='zfb'
                       style={{ width: '100%', marginBottom: 4 }}
                     >
                       {t('支付宝')}
                     </Radio>
-                    <Radio 
+                    <Radio
                       value='wx'
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', marginBottom: 4 }}
                     >
                       {t('微信')}
+                    </Radio>
+                    <Radio
+                      value='epay'
+                      style={{ width: '100%' }}
+                    >
+                      {t('易支付')}
                     </Radio>
                   </RadioGroup>
                 </div>
@@ -541,17 +547,23 @@ const TopUp = () => {
                     name="payment-method"
                     style={{ rowGap: '0px' }}
                   >
-                    <Radio 
+                    <Radio
                       value='zfb'
                       style={{ width: '100%', marginBottom: 4 }}
                     >
                       {t('支付宝')}
                     </Radio>
-                    <Radio 
+                    <Radio
                       value='wx'
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', marginBottom: 4 }}
                     >
                       {t('微信')}
+                    </Radio>
+                    <Radio
+                      value='epay'
+                      style={{ width: '100%' }}
+                    >
+                      {t('易支付')}
                     </Radio>
                   </RadioGroup>
                 </div>
